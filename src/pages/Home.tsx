@@ -1,6 +1,7 @@
 import { Countdown } from '../components/Countdown'
 import { Icon } from '../components/Icon'
 import { DefyWordmark, Mark27 } from '../components/Marks'
+import { Gallery } from '../components/Gallery'
 import { DotMatrix, GlyphField, PixelCluster } from '../components/Pixel'
 import { Accordion, CountUp, Frame, RegisterButton, SectionHead, Stars } from '../components/ui'
 import { LINKS } from '../config/links'
@@ -86,7 +87,7 @@ function Hero() {
 }
 
 function Ticker() {
-  const items = [`Registrations close ${EVENT.registrationClosesShort}`, 'Entry free', 'Teams of 4–6', '24 hours', 'Web3 × Business', 'VIT Chennai', '9–10 Jan 2027', 'Top 30 to the finals']
+  const items = [`Registrations close ${EVENT.registrationClosesShort}`, 'Entry free', 'Teams of 4–6', '24 hours', 'Web3 × Business', 'VIT Chennai', '9–10 Jan 2027', `Top ${EVENT.shortlisted} to VIT Chennai`, `${EVENT.finalistsPerTrack} finalists per track`]
   const row = [...items, ...items]
   return (
     <div className="ticker" aria-hidden="true">
@@ -99,6 +100,17 @@ function Ticker() {
         ))}
       </div>
     </div>
+  )
+}
+
+/* ── DeFy'26 in photos, right under the hero ─────────────────── */
+
+function Photos() {
+  return (
+    <Frame id="photos" className="photos">
+      <SectionHead eyebrow="DeFy’26 · last edition" title="This is what 24 hours at DeFy looks like" aside={<Link to="/archive" className="textlink">Past editions <Icon name="right" /></Link>} />
+      <Gallery />
+    </Frame>
   )
 }
 
@@ -133,12 +145,12 @@ function About() {
             <span className="statpanel__k">team submissions at DeFy&rsquo;26</span>
           </div>
           <div className="statpanel__row">
-            <span className="statpanel__v">30</span>
-            <span className="statpanel__k">teams make it to Chennai</span>
+            <span className="statpanel__v">{EVENT.shortlisted}</span>
+            <span className="statpanel__k">teams shortlisted to build at VIT Chennai</span>
           </div>
           <div className="statpanel__row">
-            <span className="statpanel__v">6</span>
-            <span className="statpanel__k">finalists pitch for the Grand Prize</span>
+            <span className="statpanel__v">{EVENT.finalistsPerTrack}</span>
+            <span className="statpanel__k">finalists per track, picked from the shortlisted teams</span>
           </div>
           <div className="statpanel__row">
             <span className="statpanel__v">
@@ -193,7 +205,7 @@ const PERKS = [
   { k: 'Mentors', v: 'Industry judges & mentors', d: 'Partners sit on the finalist panel and run workshops and talks.' },
   { k: 'Careers', v: 'Get hired', d: 'Hiring partners see your work, your GitHub and your LinkedIn.' },
   { k: 'Swag', v: 'T-shirts & stickers', d: 'Event tees and swag for every team at the venue.' },
-  { k: 'Network', v: 'Investor-style pitch', d: 'Six finalist teams pitch to people who back startups.' },
+  { k: 'Network', v: 'Investor-style pitch', d: 'The finalists in every track pitch to people who back startups.' },
 ]
 
 function Prizes() {
@@ -272,12 +284,43 @@ function HowItWorks() {
   )
 }
 
+/* ── selection: laid out explicitly ───────────────────────────── */
+
+function Selection() {
+  const steps = [
+    { k: 'Step 1', t: 'Register', d: `Every team registers on Unstop by ${EVENT.registrationClosesLabel}. Entry is free.`, who: 'All teams' },
+    { k: 'Step 2', t: 'Round 1 · online', d: 'Every registered team submits an idea and a proposed tech stack, from anywhere.', who: 'All teams' },
+    { k: 'Step 3', t: 'Shortlist', d: `Judges shortlist the top ${EVENT.shortlisted} teams. Only these teams are invited to VIT Chennai.`, who: `${EVENT.shortlisted} teams` },
+    { k: 'Step 4', t: '24-hour hackathon', d: `The ${EVENT.shortlisted} shortlisted teams build their prototype and pitch deck on campus, overnight.`, who: `${EVENT.shortlisted} teams` },
+    { k: 'Step 5', t: 'Finalists', d: `From the shortlisted teams only, judges pick ${EVENT.finalistsPerTrack} finalists in each track.`, who: `${EVENT.finalistsPerTrack} per track` },
+    { k: 'Step 6', t: 'Pitching finals', d: 'The finalists pitch their prototype and business model for the Grand Prize.', who: 'Finalists' },
+  ]
+  return (
+    <Frame id="selection">
+      <SectionHead n="05" eyebrow="Selection" title="Exactly how teams reach the finals" sub="No guesswork. Every finalist comes from the shortlisted teams who build at VIT Chennai." />
+      <ol className="funnel">
+        {steps.map((s, i) => (
+          <li key={s.k} className={`funnel__row${i === 4 ? ' is-key' : ''}`} style={{ ['--w' as string]: `${100 - i * 9}%`, ['--i' as string]: i }} data-reveal>
+            <span className="funnel__k">{s.k}</span>
+            <span className="funnel__t">{s.t}</span>
+            <span className="funnel__d">{s.d}</span>
+            <span className="funnel__who">{s.who}</span>
+          </li>
+        ))}
+      </ol>
+      <p className="funnel__note" data-reveal>
+        <strong>Important:</strong> the {EVENT.finalistsPerTrack} finalists in each track are chosen only from the {EVENT.shortlisted} shortlisted teams that come to VIT Chennai and take part in the 24-hour hackathon. If your team isn&rsquo;t shortlisted in Round 1, or doesn&rsquo;t attend the hackathon, it can&rsquo;t reach the finals.
+      </p>
+    </Frame>
+  )
+}
+
 /* ── schedule ─────────────────────────────────────────────────── */
 
 function Schedule() {
   return (
     <Frame id="schedule">
-      <SectionHead n="05" eyebrow="Schedule" title="Two days, one night" sub={`${EVENT.dates} · ${EVENT.venue}. Exact timings go out to finalists.`} />
+      <SectionHead n="06" eyebrow="Schedule" title="Two days, one night" sub={`${EVENT.dates} · ${EVENT.venue}. Exact timings go out to shortlisted teams.`} />
       <div className="sched">
         {AGENDA.map((d, di) => (
           <div key={d.day} className="sched__day chamfer" data-reveal style={{ ['--i' as string]: di }}>
@@ -306,7 +349,7 @@ function People() {
   const roles = ['Judge', 'Mentor', 'Speaker', 'Judge']
   return (
     <Frame id="people" tone="raised">
-      <SectionHead n="06" eyebrow="Judges, mentors & speakers" title="The room you’ll pitch to" sub="Founders, investors and protocol engineers. The line-up is revealed in drops, so watch our socials." />
+      <SectionHead n="07" eyebrow="Judges, mentors & speakers" title="The room you’ll pitch to" sub="Founders, investors and protocol engineers. The line-up is revealed in drops, so watch our socials." />
       <div className="people">
         {roles.map((r, i) => (
           <div key={i} className="person chamfer" data-reveal style={{ ['--i' as string]: i }}>
@@ -343,7 +386,7 @@ function Sponsors() {
   const rest = CURRENT_SPONSORS.filter((s) => s.tier === 'platform' || s.tier === 'community')
   return (
     <Frame id="sponsors">
-      <SectionHead n="07" eyebrow="Sponsors & partners" title="Powering DeFy’27" />
+      <SectionHead n="08" eyebrow="Sponsors & partners" title="Powering DeFy’27" />
       <div className="partners" data-reveal>
         <div className="partners__main">
           {main.map((s) => (
@@ -392,7 +435,7 @@ function Sponsors() {
 function LastEdition() {
   return (
     <Frame id="numbers" tone="raised">
-      <SectionHead n="08" eyebrow="DeFy’26 · last edition" title="The proof of work" />
+      <SectionHead n="09" eyebrow="DeFy’26 · last edition" title="The proof of work" />
       <div className="proof">
         <div className="proof__big" data-reveal>
           <span className="proof__v">
@@ -461,7 +504,7 @@ function Faq() {
     <Frame id="faq">
       <div className="faq">
         <div>
-          <SectionHead n="09" eyebrow="FAQ" title="Before you register" />
+          <SectionHead n="10" eyebrow="FAQ" title="Before you register" />
           <div className="orgs" data-reveal>
             <p className="orgs__k">Organised by</p>
             <div className="orgs__logos">
@@ -491,7 +534,7 @@ function FinalCall() {
         <div className="final__card chamfer" data-reveal>
           <p className="final__k">Block #027 is open</p>
           <h2 className="final__t">Registrations are open.</h2>
-          <p className="final__s">Free entry. Teams of 4–6. Register by {EVENT.registrationClosesLabel}, submit your idea in Round 1, and the top 30 teams come to Chennai to build for 24 hours.</p>
+          <p className="final__s">Free entry. Teams of 4–6. Register by {EVENT.registrationClosesLabel} and submit your idea in Round 1. The top {EVENT.shortlisted} teams build at VIT Chennai for 24 hours, and {EVENT.finalistsPerTrack} finalists per track pitch for the Grand Prize.</p>
           <div className="final__cta">
             <RegisterButton size="lg" />
           </div>
@@ -509,10 +552,12 @@ export default function Home() {
     <>
       <Hero />
       <Ticker />
+      <Photos />
       <About />
       <Tracks />
       <Prizes />
       <HowItWorks />
+      <Selection />
       <Schedule />
       <People />
       <Sponsors />

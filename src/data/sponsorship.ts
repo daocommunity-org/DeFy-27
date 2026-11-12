@@ -52,7 +52,7 @@ export const AUDIENCE = [
 export const BENEFITS = [
   { key: 'Engage', icon: 'mic', head: 'A direct line to top Web3 talent', body: 'Mentor, judge and run sessions with India’s top 1% of blockchain developers.' },
   { key: 'Reach', icon: 'broadcast', head: '25,000+ students, one event', body: 'Brand presence across campuses, LinkedIn, X and Instagram, before, during and after.' },
-  { key: 'Connect', icon: 'link', head: 'First look at 6 startups', body: 'Meet founding teams before they scale, to invest, partner or acquire.' },
+  { key: 'Connect', icon: 'link', head: 'First look at the finalists', body: 'Meet the finalist teams in every track before they scale, to invest, partner or acquire.' },
   { key: 'Recruit', icon: 'user', head: 'Hire before anyone else', body: 'Early access to students skilled in blockchain, crypto and decentralized systems.' },
 ] as const
 

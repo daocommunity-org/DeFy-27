@@ -1,4 +1,5 @@
 import { HexField } from '../components/Decor'
+import { Gallery } from '../components/Gallery'
 import { Icon } from '../components/Icon'
 import { Mark27 } from '../components/Marks'
 import { Button, CountUp, Eyebrow, Frame, LogoTile, RegisterButton, SectionHead, Stars } from '../components/ui'
@@ -174,6 +175,10 @@ export default function Archive() {
     <>
       <ArchiveHero />
       <Numbers />
+      <Frame id="photos">
+        <SectionHead eyebrow="In frames" title="DeFy’26, from the floor" />
+        <Gallery />
+      </Frame>
       <Projects />
       <Wall />
       <Voices />

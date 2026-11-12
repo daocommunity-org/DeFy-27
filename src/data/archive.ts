@@ -23,3 +23,11 @@ export type PastProject = {
 // TODO(core): add winning builds here. The "Winning builds" section on the
 // Past editions page stays hidden while this list is empty.
 export const PAST_PROJECTS: PastProject[] = []
+
+/** DeFy'26 photos (public/photos). `slot` places them in the gallery grid. */
+export const DEFY26_PHOTOS = [
+  { src: '/photos/defy26-stage.jpg', w: 1500, h: 2000, slot: 'tall', caption: 'Defy the limits: the opening on the main stage', alt: 'DeFy logo on the big lime screen behind the VIT Chennai podium at the DeFy’26 opening' },
+  { src: '/photos/defy26-hacking.jpg', w: 2000, h: 1333, slot: 'wide', caption: 'Mentors at the tables through the night', alt: 'A mentor walking a team through their code on the DeFy’26 hacking floor, laptops and cables across the desks' },
+  { src: '/photos/defy26-speakers.jpg', w: 2000, h: 1500, slot: 'a', caption: 'Industry speaker sessions', alt: 'An industry speaker and two hosts seated on stage under a DeFy speaker slide' },
+  { src: '/photos/defy26-crew.jpg', w: 2000, h: 1333, slot: 'b', caption: 'The crew behind DeFy’26', alt: 'The DeFy’26 organising team in DeFy t-shirts posing together on the auditorium stage' },
+] as const
