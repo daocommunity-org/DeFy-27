@@ -1,0 +1,11 @@
+# Internal docs never need to reach Vercel. (Only dist/ is served anyway,
+# but keep them out of the upload as well.)
+security.md
+DEFY27-BUILD-SPEC.md
+
+node_modules/
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.log
