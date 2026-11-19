@@ -60,6 +60,35 @@ function RegBar() {
   )
 }
 
+/** Phones only: a register dock pinned to the bottom of the screen with the
+ *  countdown. It slides in once the hero's own Register button scrolls away
+ *  (on other pages it shows straight away). Hidden while the menu is open. */
+function RegDock() {
+  const { route } = useRouter()
+  const now = useNow(1000)
+  const [past, setPast] = useState(false)
+  useEffect(() => {
+    const on = () => setPast(route !== '/' || window.scrollY > 520)
+    on()
+    window.addEventListener('scroll', on, { passive: true })
+    return () => window.removeEventListener('scroll', on)
+  }, [route])
+  if (now >= EVENT.registrationCloses) return null
+  const s = Math.max(0, Math.floor((EVENT.registrationCloses - now) / 1000))
+  const p2 = (n: number) => String(n).padStart(2, '0')
+  return (
+    <div className={`dock${past ? ' is-on' : ''}`} aria-hidden={!past || undefined}>
+      <span className="dock__cd" role="timer">
+        <span className="dock__k">Registrations close in</span>
+        <span className="dock__v">
+          {Math.floor(s / 86400)}d {p2(Math.floor(s / 3600) % 24)}h {p2(Math.floor(s / 60) % 60)}m {p2(s % 60)}s
+        </span>
+      </span>
+      <RegisterButton label="Register" />
+    </div>
+  )
+}
+
 export function Nav() {
   const { route } = useRouter()
   const [open, setOpen] = useState(false)
@@ -119,6 +148,7 @@ export function Nav() {
         </div>
       </div>
     </header>
+    <RegDock />
     </>
   )
 }

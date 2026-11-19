@@ -176,7 +176,7 @@ function Tracks() {
   return (
     <Frame id="tracks" tone="raised">
       <SectionHead n="02" eyebrow="Tracks" title="Pick your battleground" sub="Full briefs drop to registered teams first, along with sponsor problem statements and their bounties." />
-      <div className="tracks">
+      <div className="tracks rail-m">
         {TRACKS.map((t, i) => (
           <article key={t.id} className="track chamfer" data-reveal style={{ ['--i' as string]: i }}>
             <div className="track__top">
@@ -193,6 +193,7 @@ function Tracks() {
           </article>
         ))}
       </div>
+      <p className="swipe" aria-hidden="true">Swipe through the tracks</p>
     </Frame>
   )
 }
@@ -261,7 +262,7 @@ function HowItWorks() {
             <span />
           </div>
         </div>
-        <ol className="how__track" data-htrack>
+        <ol className="how__track rail-m" data-htrack>
           {steps.map((s, i) => {
             const state = now >= s.to ? 'done' : now >= s.from ? 'live' : 'next'
             return (
@@ -279,6 +280,7 @@ function HowItWorks() {
             )
           })}
         </ol>
+        <p className="swipe swipe--pad" aria-hidden="true">Swipe through the steps</p>
       </div>
     </section>
   )
@@ -350,7 +352,7 @@ function People() {
   return (
     <Frame id="people" tone="raised">
       <SectionHead n="07" eyebrow="Judges, mentors & speakers" title="The room you’ll pitch to" sub="Founders, investors and builders from the companies backing DeFy. More names drop soon, so watch our socials." />
-      <div className="people">
+      <div className="people rail-m">
         {PEOPLE.map((p, i) => (
           <article key={p.name} className="person person--on chamfer" data-reveal style={{ ['--i' as string]: i }}>
             <div className="person__img">
@@ -372,6 +374,7 @@ function People() {
           </div>
         ))}
       </div>
+      <p className="swipe" aria-hidden="true">Swipe to see who&rsquo;s confirmed</p>
     </Frame>
   )
 }

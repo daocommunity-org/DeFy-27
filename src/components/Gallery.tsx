@@ -11,7 +11,8 @@ const ORDER = Array.from({ length: COLS * ROWS }, (_, i) => ((i * 29) % (COLS * 
 
 export function Gallery() {
   return (
-    <div className="gallery">
+    <>
+    <div className="gallery rail-m">
       {DEFY26_PHOTOS.map((p) => (
         <figure key={p.src} className={`ph ph--${p.slot} chamfer`} data-reveal>
           <div className="ph__img">
@@ -29,5 +30,7 @@ export function Gallery() {
         </figure>
       ))}
     </div>
+    <p className="swipe" aria-hidden="true">Swipe for more photos</p>
+    </>
   )
 }

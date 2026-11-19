@@ -37,13 +37,23 @@ export function SiteMotion() {
     // A pinned horizontal section only pins when its track really overflows
     // the viewport by a meaningful amount; otherwise it lays out as a grid.
     const measure = () => {
+      // Decide phone vs desktop BEFORE touching layout: un-pinning the track
+      // briefly makes it very wide, and mobile browsers widen the viewport to
+      // fit overflow, so innerWidth can't be trusted mid-measure.
+      const vw = document.documentElement.clientWidth
+      const small = reduce || matchMedia('(max-width: 860px)').matches
       for (const el of pins) {
         const track = el.querySelector<HTMLElement>('[data-htrack]')
+        if (small || !track) {
+          el.classList.remove('is-pinned')
+          el.classList.add('is-static')
+          el.style.height = ''
+          continue
+        }
         el.classList.remove('is-pinned', 'is-static')
         el.style.height = ''
-        if (!track) continue
-        const shift = track.scrollWidth - window.innerWidth
-        if (!reduce && window.innerWidth > 860 && shift > 160) {
+        const shift = track.scrollWidth - vw
+        if (shift > 160) {
           el.classList.add('is-pinned')
           el.style.setProperty('--shift', String(shift))
           el.style.height = `${window.innerHeight + shift}px`

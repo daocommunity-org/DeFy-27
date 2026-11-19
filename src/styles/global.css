@@ -883,3 +883,139 @@ a.copyrow__val:hover { color: var(--lime); }
 .person__meta { color: var(--muted); font-size: 0.9rem; line-height: 1.4; }
 .person__session { margin-top: 4px; font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lime); }
 @media (max-width: 640px) { .regbar__go { font-size: 0; border-bottom: 0; } .regbar__go svg { width: 16px; height: 16px; } }
+
+/* ═══ PHONE LAYOUT (≤ 760px) ═════════════════════════════════════
+   Desktop is untouched. On phones: no top bar (the countdown lives in a
+   bottom dock), a compact hero, swipe rails instead of tall stacks,
+   two-column grids for small things, tighter section rhythm. */
+
+.swipe, .dock { display: none; }
+
+@media (max-width: 760px) {
+  :root { --bar-h: 0px; --cut: 10px; }
+  .regbar { display: none; }
+  body { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); background-size: 72px 72px; }
+
+  /* register dock */
+  .dock { position: fixed; z-index: 64; left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; background: rgba(13, 15, 11, 0.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4), inset 0 0 0 1px var(--line-2); clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); transform: translateY(calc(100% + 24px)); transition: transform 0.45s var(--ease); }
+  .dock.is-on { transform: none; }
+  .nav.is-open ~ .dock { display: none; }
+  .dock__cd { flex: 1; display: grid; gap: 2px; min-width: 0; }
+  .dock__k { font-family: var(--f-mono); font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); }
+  .dock__v { font-family: var(--f-display); font-weight: 300; font-size: 0.92rem; color: var(--lime); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .dock .btn { --h: 44px; padding: 0 16px; font-size: 0.6rem; }
+
+  /* section rhythm */
+  .sec { padding-block: 60px; }
+  .shead { margin-bottom: 26px; gap: 12px; }
+  .shead__aside { display: none; }
+  .h2 { font-size: 1.32rem; }
+  .lede { font-size: 0.98rem; margin-top: 12px; }
+  .blk { margin-bottom: 14px; font-size: 0.62rem; letter-spacing: 0.2em; }
+
+  /* hero */
+  .hero { min-height: 0; }
+  .hero__in { justify-content: flex-start; padding-top: calc(var(--nav-h) + 26px); padding-bottom: 26px; }
+  .hero__status { margin-bottom: 18px; font-size: 0.64rem; }
+  .hero__title { margin-top: 18px; font-size: 0.98rem; line-height: 1.38; }
+  .hero__meta { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 20px; background: var(--line-2); border: 1px solid var(--line-2); }
+  .hero__meta li { padding: 11px 12px; background: rgba(8, 9, 7, 0.92); font-size: 0.64rem; letter-spacing: 0.1em; color: var(--ink); }
+  .hero__meta li:last-child { color: var(--lime); }
+  .hero__cta { flex-direction: column; align-items: stretch; gap: 14px; margin-top: 20px; }
+  .hero__cta .btn { width: 100%; }
+  .hero__link { align-self: center; }
+  .hero .cdc { display: none; }
+  .hero__strip-in { flex-direction: column; align-items: stretch; gap: 12px; padding-block: 16px 18px; }
+  .hero__strip ul { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; }
+  .hlogo a { display: flex; align-items: center; height: 26px; }
+  .hlogo--w3 .hlogo__img { height: 20px; max-width: 100%; }
+  .hlogo--w2 .hlogo__img { height: 18px; max-width: 100%; }
+  .hlogo__img--mlh { transform: none; height: 22px !important; }
+
+  /* swipe rails */
+  .rail-m { display: flex !important; grid-template-columns: none !important; grid-template-rows: none !important; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; gap: 12px; margin-inline: calc(-1 * var(--gut-l)) calc(-1 * var(--gut-r)); padding-inline: var(--gut-l) var(--gut-r); scroll-padding-inline: var(--gut-l); scrollbar-width: none; }
+  .rail-m::-webkit-scrollbar { display: none; }
+  .rail-m > * { flex: 0 0 84%; scroll-snap-align: start; min-width: 0; }
+  .swipe { display: flex; align-items: center; gap: 10px; margin: 14px 0 0; font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); }
+  .swipe::after { content: ''; width: 34px; height: 1px; background: var(--lime); animation: swipeHint 1.6s var(--ease) infinite; }
+  @keyframes swipeHint { 0% { transform: translateX(0); opacity: 1; } 70% { transform: translateX(14px); opacity: 0; } 100% { opacity: 0; } }
+  .swipe--pad { padding-inline: var(--gut-l); }
+
+  /* photos */
+  .photos { padding-block: 48px 52px; }
+  .gallery.rail-m > .ph { grid-column: auto; grid-row: auto; height: 300px; }
+  .gallery.rail-m > .ph--tall { flex-basis: 70%; }
+  .ph__cap { font-size: 0.7rem; padding: 30px 14px 14px; }
+
+  /* about */
+  .about__deco { display: none; }
+  .pillars li { padding: 12px 0; }
+  .statpanel { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; padding: 0; background: var(--line-2); }
+  .statpanel__row { flex-direction: column; align-items: flex-start; gap: 6px; padding: 16px; border: 0; background: var(--panel); }
+  .statpanel__v { font-size: 2rem; }
+  .statpanel__k { text-align: left; font-size: 0.82rem; max-width: none; }
+
+  /* tracks */
+  .tracks.rail-m { border: 0; }
+  .tracks.rail-m > .track { min-height: 270px; border: 0; clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut)); background: var(--panel); }
+  .track:hover { transform: none; }
+
+  /* prizes */
+  .pool { min-height: 230px; gap: 12px; }
+  .pool__v { font-size: 2.2rem; }
+  .perks { grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  .perk { padding: 14px 0 16px; gap: 4px; }
+  .perk__v { font-size: 0.74rem; }
+  .perk__d { font-size: 0.84rem; line-height: 1.45; }
+
+  /* how it works: a swipe rail of steps */
+  .how.is-static .how__sticky { padding-block: 60px; }
+  .how.is-static .how__track { padding-inline: var(--gut-l) var(--gut-r); margin: 0; }
+  .how.is-static .how__track > .step { flex-basis: 82%; min-height: 290px; }
+  .step:hover { transform: none; }
+
+  /* selection funnel: tighter rows */
+  .funnel { gap: 6px; }
+  .funnel__row { padding: 14px 16px; gap: 6px 12px; }
+  .funnel__t { font-size: 0.8rem; }
+  .funnel__d { font-size: 0.9rem; }
+  .funnel__note { padding: 14px 16px; font-size: 0.92rem; margin-top: 18px; }
+
+  /* schedule */
+  .sched__day { padding: 18px; }
+  .sched li { padding: 10px 0; font-size: 0.95rem; }
+
+  /* people */
+  .people.rail-m > .person { flex-basis: 62%; }
+
+  /* sponsors: one 2-column grid of compact tiles */
+  .partners { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .partners__main, .partners__rest { display: contents; }
+  .partner, .partner--lg { min-height: 124px; padding: 14px; gap: 10px; }
+  .partner__logo img, .partner--lg .partner__logo img, .partner--md .partner__logo img { max-height: 30px; max-width: 88%; }
+  .partner__name { font-size: 0.58rem; }
+  .pitch { padding: 24px 20px; gap: 22px; }
+  .pitch__t { font-size: 1.05rem; }
+  .pitch__stats > div { grid-template-columns: 90px 1fr; padding: 10px 0; }
+  .pitch__stats dt { font-size: 1rem; }
+  .pitch__stats dd { font-size: 0.86rem; }
+
+  /* proof */
+  .proof { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .proof__big { grid-column: 1 / -1; min-height: 0; padding: 20px; }
+  .proof__v { font-size: 3rem; }
+  .proof__cell { padding: 16px; }
+  .proof__cell--wide { grid-column: 1 / -1; }
+  .proof__m { font-size: 1.6rem; }
+
+  /* faq + final + footer */
+  .faq .shead { margin-bottom: 22px; }
+  .acc__h button { padding: 18px 0; font-size: 1rem; }
+  .final { padding-block: 56px; }
+  .final__card { padding: 28px 20px; }
+  .final__t { font-size: 1.35rem; }
+  .final__s { font-size: 0.95rem; margin: 14px 0 22px; }
+  .foot { padding-top: 44px; }
+  .foot__mid { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 760px) { .how__track.rail-m { width: auto; } .how__track.rail-m > .step { flex: 0 0 82%; width: auto; } }
