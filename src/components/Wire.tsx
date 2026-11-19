@@ -24,24 +24,49 @@ export function Wire() {
   const ref = useRef<HTMLDivElement | null>(null)
   const reduce = useReducedMotion()
 
+  // Rows drift slowly on their own (so the strip is never static) and the
+  // page scroll adds to that drift. Each row holds its list three times; the
+  // offset wraps every one-list width, so the loop is seamless. Per frame this
+  // only reads scrollY and writes two transforms: no layout reads.
   useEffect(() => {
     const el = ref.current
     if (!el || reduce) return
+    const rows = Array.from(el.querySelectorAll<HTMLElement>('.wsc__row'))
+    let setW = rows.map((r) => r.scrollWidth / 3)
+    const measure = () => (setW = rows.map((r) => r.scrollWidth / 3))
+    const DRIFT = 22 // px per second when idle
+    const PUSH = 0.35 // px of travel per px scrolled
     let raf = 0
-    const tick = () => {
-      raf = 0
-      const r = el.getBoundingClientRect()
-      const p = (window.innerHeight - r.top) / (window.innerHeight + r.height) // 0 → 1 as it crosses the screen
-      el.style.setProperty('--sx', `${((p - 0.5) * 40).toFixed(2)}%`)
+    let visible = true
+    let t0 = performance.now()
+    const wrap = (x: number, w: number) => ((x % w) + w) % w
+    const frame = (t: number) => {
+      const travel = ((t - t0) / 1000) * DRIFT + window.scrollY * PUSH
+      rows.forEach((row, i) => {
+        const w = setW[i] || 1
+        const x = i === 0 ? -wrap(travel, w) : -w + wrap(travel * 0.8, w)
+        row.style.transform = `translate3d(${x.toFixed(1)}px, 0, 0)`
+      })
+      if (visible) raf = requestAnimationFrame(frame)
     }
-    const on = () => {
-      if (!raf) raf = requestAnimationFrame(tick)
-    }
-    tick()
-    window.addEventListener('scroll', on, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', on)
+    const start = () => {
       cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(frame)
+    }
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting
+      if (visible) start()
+    })
+    io.observe(el)
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    document.fonts?.ready.then(measure)
+    t0 = performance.now()
+    start()
+    return () => {
+      cancelAnimationFrame(raf)
+      io.disconnect()
+      ro.disconnect()
     }
   }, [reduce])
 
