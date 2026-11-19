@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Countdown } from '../components/Countdown'
 import { Icon } from '../components/Icon'
 import { DefyWordmark, Mark27 } from '../components/Marks'
@@ -13,75 +14,226 @@ import { useNow } from '../lib/hooks'
 import { Link } from '../lib/router'
 
 /* bitmaps for the block shapes ('#' = one cell) */
-const BLK_A = ['..######', '..######', '######..', '######..', '##..####', '##..####', '########']
-const BLK_B = ['##..', '####', '..##', '####']
 const BLK_D = ['####....', '####....', '########', '..######', '....####']
 
-/* ── hero ─────────────────────────────────────────────────────── */
+/* ── hero: four layouts around the same live mosaic (?hero=1..4) ──
+   1 · Split        text left, mosaic right (the original layout)
+   2 · Center       mosaic fills the hero, wordmark centred
+   3 · Spec sheet   mosaic band on top, full-width wordmark, fact index
+   4 · Window       mosaic in a framed panel with HUD labels
+   The switcher is a design tool for the redesign branch only. */
+
+type Layout = '1' | '2' | '3' | '4'
+const LAYOUTS: { id: Layout; name: string }[] = [
+  { id: '1', name: 'Split' },
+  { id: '2', name: 'Center' },
+  { id: '3', name: 'Spec sheet' },
+  { id: '4', name: 'Window' },
+]
+const readLayout = (): Layout => {
+  const v = new URLSearchParams(location.search).get('hero')
+  return v === '2' || v === '3' || v === '4' ? v : '1'
+}
+
+/** The exact mosaic from the original hero: same cell size, same settings. */
+function Mosaic({ className = '', density = 1 }: { className?: string; density?: number }) {
+  return (
+    <div className={`hero__field ${className}`} data-speed="-0.1" aria-hidden="true">
+      <GlyphField cell={26} solids={false} density={density} />
+    </div>
+  )
+}
+
+function Mark() {
+  return (
+    <h1 className="hero__mark">
+      <DefyWordmark className="hero__defy" title="" />
+      <Mark27 className="hero__27" title="" />
+      <span className="sr">DeFy&rsquo;27: 24-hour Web3 and blockchain hackathon at VIT Chennai</span>
+    </h1>
+  )
+}
+function Status() {
+  return (
+    <p className="hero__status">
+      <span className="live" aria-hidden="true" />
+      <span>Registrations open</span>
+      <span className="hero__dim">Closes {EVENT.registrationClosesShort}</span>
+    </p>
+  )
+}
+function Statement() {
+  return (
+    <p className="hero__title">
+      24 hours to build the next block of Web3,{' '}
+      <br className="hero__br" />
+      <span className="lime">and the business that runs on it.</span>
+    </p>
+  )
+}
+function Facts() {
+  return (
+    <ul className="hero__meta">
+      <li>{EVENT.datesShort}</li>
+      <li>{EVENT.city}</li>
+      <li>Teams of 4–6</li>
+      <li>Free entry</li>
+    </ul>
+  )
+}
+function Cta() {
+  return (
+    <div className="hero__cta">
+      <RegisterButton size="lg" />
+      <Link to="/sponsor" className="hero__link">
+        Sponsor DeFy&rsquo;27 <Icon name="arrow" />
+      </Link>
+    </div>
+  )
+}
+function Strip() {
+  return (
+    <div className="hero__strip">
+      <div className="wrap hero__strip-in">
+        <span className="hero__strip-k">Backed by</span>
+        <ul>
+          {CURRENT_SPONSORS.map((b) => (
+            <li key={b.name} className={`hlogo hlogo--w${b.weight}`}>
+              <a href={b.href} target="_blank" rel="noopener noreferrer" title={b.name}>
+                <img src={b.logo} alt={b.name} className={`hlogo__img hlogo__img--${b.name.toLowerCase()}`} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+/** Key/value rows for the spec-sheet layout. */
+const SPEC = [
+  ['Dates', '9–10 January 2027'],
+  ['Venue', 'M.G. Auditorium, VIT Chennai'],
+  ['Format', '24 hours · overnight'],
+  ['Teams', '4–6 people'],
+  ['Entry', 'Free'],
+  ['Finals', `${EVENT.finalistsPerTrack} per track`],
+] as const
+
+function HeroSwitch({ v, set }: { v: Layout; set: (v: Layout) => void }) {
+  return (
+    <div className="hswitch" role="group" aria-label="Hero layout (design preview)">
+      <span className="hswitch__k">Layout</span>
+      {LAYOUTS.map((x) => (
+        <button key={x.id} type="button" className={v === x.id ? 'is-on' : ''} aria-pressed={v === x.id} onClick={() => set(x.id)}>
+          {x.id} <span>{x.name}</span>
+        </button>
+      ))}
+    </div>
+  )
+}
 
 function Hero() {
+  const [v, setV] = useState<Layout>(readLayout)
+  const choose = (n: Layout) => {
+    setV(n)
+    const u = new URL(location.href)
+    u.searchParams.set('hero', n)
+    history.replaceState(history.state, '', u)
+    window.dispatchEvent(new Event('resize'))
+  }
   return (
-    <section className="hero" id="home">
-      <div className="hero__art" aria-hidden="true">
-        <div className="hero__field" data-speed="-0.1">
-          <GlyphField cell={26} solids={false} />
-        </div>
-        <div className="hero__blk hero__blk--a" data-speed="0.16">
-          <PixelCluster map={BLK_A} />
-        </div>
-        <div className="hero__blk hero__blk--b" data-speed="0.3">
-          <PixelCluster map={BLK_B} tone="violet" />
-        </div>
-        <div className="hero__blk hero__blk--c" data-speed="0.06">
-          <DotMatrix />
-        </div>
-      </div>
+    <section className={`hero hero--l${v}`} id="home" key={v}>
+      {v === '1' && (
+        <>
+          <div className="hero__art" aria-hidden="true">
+            <Mosaic />
+          </div>
+          <div className="wrap hero__in">
+            <Status />
+            <Mark />
+            <Statement />
+            <Facts />
+            <Cta />
+            <Countdown compact />
+          </div>
+        </>
+      )}
 
-      <div className="wrap hero__in">
-        <p className="hero__status">
-          <span className="live" aria-hidden="true" />
-          <span>Registrations open</span>
-          <span className="hero__dim">Closes {EVENT.registrationClosesShort}</span>
-        </p>
-        <h1 className="hero__mark">
-          <DefyWordmark className="hero__defy" title="" />
-          <Mark27 className="hero__27" title="" />
-          <span className="sr">DeFy&rsquo;27: 24-hour Web3 and blockchain hackathon at VIT Chennai</span>
-        </h1>
-        <p className="hero__title">
-          24 hours to build the next block of Web3,{' '}
-          <br className="hero__br" />
-          <span className="lime">and the business that runs on it.</span>
-        </p>
-        <ul className="hero__meta">
-          <li>{EVENT.datesShort}</li>
-          <li>{EVENT.city}</li>
-          <li>Teams of 4–6</li>
-          <li>Free entry</li>
-        </ul>
-        <div className="hero__cta">
-          <RegisterButton size="lg" />
-          <Link to="/sponsor" className="hero__link">
-            Sponsor DeFy&rsquo;27 <Icon name="arrow" />
-          </Link>
-        </div>
-        <Countdown compact />
-      </div>
+      {v === '2' && (
+        <>
+          <div className="hero__art hero__art--full" aria-hidden="true">
+            <Mosaic />
+          </div>
+          <div className="wrap hero__in hero__in--center">
+            <Status />
+            <Mark />
+            <Statement />
+            <Cta />
+            <Countdown compact />
+          </div>
+          <div className="wrap">
+            <div className="hero__factbar">
+              <Facts />
+            </div>
+          </div>
+        </>
+      )}
 
-      <div className="hero__strip">
-        <div className="wrap hero__strip-in">
-          <span className="hero__strip-k">Backed by</span>
-          <ul>
-            {CURRENT_SPONSORS.map((b) => (
-              <li key={b.name} className={`hlogo hlogo--w${b.weight}`}>
-                <a href={b.href} target="_blank" rel="noopener noreferrer" title={b.name}>
-                  <img src={b.logo} alt={b.name} className={`hlogo__img hlogo__img--${b.name.toLowerCase()}`} />
-                </a>
-              </li>
-            ))}
-          </ul>
+      {v === '3' && (
+        <div className="hero__sheet">
+          <div className="hero__band" aria-hidden="true">
+            <Mosaic density={1.18} />
+            <span className="hero__band-k hero__band-k--l">Block 027 · VIT Chennai</span>
+            <span className="hero__band-k hero__band-k--r">Web3 · Blockchain · 24h</span>
+          </div>
+          <div className="wrap">
+            <div className="hero__sheet-top">
+              <Status />
+              <Countdown compact />
+            </div>
+            <Mark />
+            <div className="hero__sheet-grid">
+              <div className="hero__sheet-col">
+                <Statement />
+                <Cta />
+              </div>
+              <dl className="hero__spec">
+                {SPEC.map(([k, val]) => (
+                  <div key={k}>
+                    <dt>{k}</dt>
+                    <dd>{val}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
+
+      {v === '4' && (
+        <div className="wrap hero__win">
+          <div className="hero__win-copy">
+            <Status />
+            <Mark />
+            <Statement />
+            <Facts />
+            <Cta />
+          </div>
+          <div className="hero__window chamfer" aria-hidden="true">
+            <Mosaic density={1.2} />
+            <span className="hero__win-k hero__win-k--tl">Live · registrations</span>
+            <span className="hero__win-k hero__win-k--tr">27 / 27</span>
+            <span className="hero__win-k hero__win-k--bl">VIT Chennai · 12.84° N</span>
+            <div className="hero__win-cd">
+              <Countdown compact />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <Strip />
+      <HeroSwitch v={v} set={choose} />
     </section>
   )
 }
