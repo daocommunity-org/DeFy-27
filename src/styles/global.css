@@ -1098,3 +1098,46 @@ a.copyrow__val:hover { color: var(--lime); }
 .hero__foot .hfacts { border-top: 0; }
 .hero__foot + .hero__strip { border-top-color: var(--line); background: rgba(8, 9, 7, 0.9); }
 @media (max-width: 760px) { .hero__foot .hfacts { padding: 0 var(--gut-r) 0 var(--gut-l); } }
+
+/* ─── hero footer: facts + logos on one shared 4-column grid ─────
+   Both rows sit inside the page wrapper (same left/right edges), so
+   "When" lines up with "Backed by" and the logos span columns 2–4. */
+@media (min-width: 761px) {
+  .hero__foot .hfacts { margin-inline: auto; padding: 0 max(36px, var(--gut-r)) 0 max(36px, var(--gut-l)); grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .hero__foot .hfact,
+  .hero__foot .hfact:first-child,
+  .hero__foot .hfact:last-child { justify-items: start; align-content: center; gap: 8px; padding: 22px 24px; }
+  .hero__foot .hfact:first-child { padding-left: 0; }
+  .hero__foot .hfact + .hfact { border-left: 1px solid var(--line); }
+  .hero__foot .hfact dd { font-size: clamp(0.84rem, 1.1vw, 1rem); }
+
+  .hero__foot + .hero__strip .hero__strip-in { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: center; gap: 0; padding-block: 22px; }
+  .hero__foot + .hero__strip .hero__strip-k { grid-column: 1; }
+  .hero__foot + .hero__strip ul { grid-column: 2 / -1; display: flex; flex-wrap: nowrap; justify-content: space-between; align-items: center; gap: 24px; padding-left: 24px; }
+}
+
+/* ─── hero: optical centring + split row ─────────────────────────
+   "Defy" is the centred object; the 27 hangs off its top-right corner
+   without shifting it. Under it, one row exactly as wide as "Defy":
+   statement left, Register right, on a hairline. */
+.hero--center { --defy-h: clamp(76px, 13.5vw, 196px); --defy-w: calc(var(--defy-h) * 4.444); }
+.hero--center .hero__mark { position: relative; display: block; width: var(--defy-w); max-width: 100%; margin-inline: auto; }
+.hero--center .hero__defy { display: block; width: 100%; height: auto; }
+.hero--center .hero__27 { position: absolute; left: calc(100% + 0.6vw); top: 2%; height: calc(var(--defy-h) * 0.37); width: auto; }
+.hero__row { width: var(--defy-w); max-width: 100%; margin: clamp(30px, 4.6vh, 46px) auto 0; padding-top: 22px; border-top: 1px solid var(--line-2); display: flex; align-items: center; justify-content: space-between; gap: 24px 40px; text-align: left; }
+.hero__row .hero__title { margin: 0; max-width: 30ch; font-size: clamp(1rem, 1.3vw, 1.18rem); }
+.hero__row .hero__cta { margin: 0; flex: none; flex-wrap: nowrap; }
+@media (max-width: 1100px) { .hero__row .hero__link { display: none; } }
+@media (max-width: 900px) {
+  .hero__row { flex-direction: column; align-items: center; text-align: center; }
+  .hero__row .hero__title { max-width: 34ch; }
+  .hero__row .hero__link { display: inline-flex; }
+}
+@media (max-width: 760px) {
+  .hero--center { --defy-h: clamp(46px, 14.5vw, 66px); }
+  .hero--center .hero__27 { left: calc(100% + 4px); height: calc(var(--defy-h) * 0.4); }
+  .hero--center .hero__mark { width: min(var(--defy-w), calc(100% - 44px)); }
+  .hero__row { width: 100%; padding-top: 18px; margin-top: 24px; }
+  .hero__row .hero__cta { width: 100%; flex-wrap: wrap; }
+}
+@media (max-width: 760px) { .hero--center { --defy-h: min(48px, 12.4vw); } .hero--center .hero__mark { width: var(--defy-w); } .hero--center .hero__27 { height: calc(var(--defy-h) * 0.42); } }

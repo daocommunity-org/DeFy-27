@@ -45,14 +45,16 @@ function Hero() {
           <Mark27 className="hero__27" title="" />
           <span className="sr">DeFy&rsquo;27: 24-hour Web3 and blockchain hackathon at VIT Chennai</span>
         </h1>
-        <p className="hero__title">
-          24 hours to build the next block of Web3, <span className="lime">and the business that runs on it.</span>
-        </p>
-        <div className="hero__cta">
-          <RegisterButton size="lg" />
-          <Link to="/sponsor" className="hero__link">
-            Sponsor DeFy&rsquo;27 <Icon name="arrow" />
-          </Link>
+        <div className="hero__row">
+          <p className="hero__title">
+            24 hours to build the next block of Web3, <span className="lime">and the business that runs on it.</span>
+          </p>
+          <div className="hero__cta">
+            <RegisterButton size="lg" />
+            <Link to="/sponsor" className="hero__link">
+              Sponsor DeFy&rsquo;27 <Icon name="arrow" />
+            </Link>
+          </div>
         </div>
       </div>
 
