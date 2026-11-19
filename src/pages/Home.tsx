@@ -46,9 +46,7 @@ function Hero() {
           <span className="sr">DeFy&rsquo;27: 24-hour Web3 and blockchain hackathon at VIT Chennai</span>
         </h1>
         <p className="hero__title">
-          24 hours to build the next block of Web3,{' '}
-          <br className="hero__br" />
-          <span className="lime">and the business that runs on it.</span>
+          24 hours to build the next block of Web3, <span className="lime">and the business that runs on it.</span>
         </p>
         <div className="hero__cta">
           <RegisterButton size="lg" />
@@ -56,9 +54,10 @@ function Hero() {
             Sponsor DeFy&rsquo;27 <Icon name="arrow" />
           </Link>
         </div>
-        <Countdown compact />
+      </div>
 
-        <dl className="hfacts">
+      <div className="hero__foot">
+        <dl className="wrap hfacts">
           {FACTS.map((f) => (
             <div key={f.k} className={`hfact${f.hl ? ' hfact--hl' : ''}`}>
               <dt>
