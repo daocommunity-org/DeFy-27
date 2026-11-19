@@ -85,6 +85,22 @@ function drawGlyph(ctx: CanvasRenderingContext2D, g: Glyph, x: number, y: number
   }
 }
 
+/* While the page is being scrolled, every mosaic holds its last frame so the
+   scroll gets the whole frame budget; drawing resumes ~160ms after it stops. */
+let scrolling = false
+let scrollTimer = 0
+if (typeof window !== 'undefined') {
+  window.addEventListener(
+    'scroll',
+    () => {
+      scrolling = true
+      window.clearTimeout(scrollTimer)
+      scrollTimer = window.setTimeout(() => (scrolling = false), 160)
+    },
+    { passive: true },
+  )
+}
+
 export function GlyphField({ cell = 26, className = '', color = '#a3f552', density = 1, solids = true }: { cell?: number; className?: string; color?: string; density?: number; solids?: boolean }) {
   const ref = useRef<HTMLCanvasElement | null>(null)
   const reduce = useReducedMotion()
@@ -105,7 +121,7 @@ export function GlyphField({ cell = 26, className = '', color = '#a3f552', densi
 
     const size = () => {
       const r = host.getBoundingClientRect()
-      dpr = Math.min(2, window.devicePixelRatio || 1)
+      dpr = Math.min(1.5, window.devicePixelRatio || 1)
       w = r.width
       h = r.height
       cv.width = Math.round(w * dpr)
@@ -116,7 +132,7 @@ export function GlyphField({ cell = 26, className = '', color = '#a3f552', densi
 
     const frame = (t: number) => {
       // ~20fps is plenty for a slow field and keeps it light
-      if (t - last < 48 && !reduce) {
+      if ((t - last < 66 || scrolling) && !reduce) {
         raf = requestAnimationFrame(frame)
         return
       }

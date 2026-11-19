@@ -88,24 +88,30 @@ export function SiteMotion() {
     }
     measure()
     let raf = 0
+    // Progress bar: write the transform straight onto the bar. (A CSS var on
+    // <html> would restyle the entire page every frame.)
+    const bar = document.querySelector<HTMLElement>('.sprog span')
+    const speeds = para.map((el) => Number(el.dataset.speed))
     const tick = () => {
       raf = 0
       const vh = window.innerHeight
       const max = root.scrollHeight - vh
-      root.style.setProperty('--scroll-p', String(max > 0 ? window.scrollY / max : 0))
-      if (!reduce)
-        for (const el of para) {
-          const r = el.parentElement?.getBoundingClientRect() ?? el.getBoundingClientRect()
-          if (r.bottom < -200 || r.top > vh + 200) continue
-          const d = r.top + r.height / 2 - vh / 2
-          el.style.setProperty('--py', `${(-d * Number(el.dataset.speed)).toFixed(1)}px`)
-        }
-      for (const el of pins) {
-        const r = el.getBoundingClientRect()
+      // 1) read everything first…
+      const progress = max > 0 ? window.scrollY / max : 0
+      const paraRects = reduce ? [] : para.map((el) => (el.parentElement ?? el).getBoundingClientRect())
+      const pinRects = pins.map((el) => el.getBoundingClientRect())
+      // 2) …then write, so the browser lays out once per frame, not per element.
+      if (bar) bar.style.transform = `scaleX(${progress.toFixed(4)})`
+      paraRects.forEach((r, i) => {
+        if (r.bottom < -200 || r.top > vh + 200) return
+        const d = r.top + r.height / 2 - vh / 2
+        para[i].style.transform = `translate3d(0, ${(-d * speeds[i]).toFixed(1)}px, 0)`
+      })
+      pinRects.forEach((r, i) => {
         const span = r.height - vh
         const p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0
-        el.style.setProperty('--p', p.toFixed(4))
-      }
+        pins[i].style.setProperty('--p', p.toFixed(4))
+      })
     }
     const on = () => {
       if (!raf) raf = requestAnimationFrame(tick)
