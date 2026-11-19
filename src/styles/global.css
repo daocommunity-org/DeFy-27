@@ -38,7 +38,9 @@
 
   --gut-l: max(16px, env(safe-area-inset-left, 0px));
   --gut-r: max(16px, env(safe-area-inset-right, 0px));
-  --nav-h: 66px;
+  --bar-h: 40px; /* registration countdown bar; 0 once registrations close */
+  --nav-in: 66px;
+  --nav-h: calc(var(--nav-in) + var(--bar-h));
   --cut: 14px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   color-scheme: dark;
@@ -188,9 +190,9 @@ button { font: inherit; color: inherit; }
 
 /* ─── nav ─────────────────────────────────────────────────────── */
 
-.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 60; padding-top: env(safe-area-inset-top, 0px); border-bottom: 1px solid transparent; transition: background 0.3s, border-color 0.3s; }
+.nav { position: fixed; top: var(--bar-h); left: 0; right: 0; z-index: 60; padding-top: env(safe-area-inset-top, 0px); border-bottom: 1px solid transparent; transition: background 0.3s, border-color 0.3s; }
 .nav.is-scrolled { background: rgba(8, 9, 7, 0.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--line); }
-.nav__in { max-width: 1280px; margin-inline: auto; padding-left: max(20px, var(--gut-l)); padding-right: max(20px, var(--gut-r)); height: var(--nav-h); display: flex; align-items: center; gap: 28px; }
+.nav__in { max-width: 1280px; margin-inline: auto; padding-left: max(20px, var(--gut-l)); padding-right: max(20px, var(--gut-r)); height: var(--nav-in); display: flex; align-items: center; gap: 28px; }
 @media (min-width: 900px) { .nav__in { padding-left: max(36px, var(--gut-l)); padding-right: max(36px, var(--gut-r)); } }
 .brand { display: inline-flex; align-items: flex-start; gap: 4px; text-decoration: none; flex: none; }
 .brand__defy { height: 18px; width: auto; color: var(--ink); }
@@ -425,7 +427,7 @@ button { font: inherit; color: inherit; }
 @media (max-width: 860px) { .seats__row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 .partners { display: grid; gap: 16px; }
-.partners__main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.partners__main { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
 .partners__rest { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .partner { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; padding: 22px; min-height: 200px; background: var(--panel); text-decoration: none; color: var(--ink); transition: background 0.3s; }
 .partner--lg { min-height: clamp(240px, 24vw, 320px); }
@@ -852,3 +854,32 @@ a.copyrow__val:hover { color: var(--lime); }
 @media (max-width: 860px) { .ph__cap { font-size: 0.66rem; padding: 28px 12px 12px; } }
 .photos { padding-top: clamp(56px, 7vw, 96px); padding-bottom: clamp(56px, 7vw, 96px); }
 .photos .gallery { margin-bottom: 0; }
+
+/* ─── registration countdown bar ─────────────────────────────── */
+
+.regbar { position: fixed; top: 0; left: 0; right: 0; z-index: 61; height: var(--bar-h); display: flex; align-items: center; background: var(--lime); color: var(--on-lime); text-decoration: none; overflow: hidden; }
+.regbar__in { width: 100%; max-width: 1280px; margin-inline: auto; padding: 0 max(170px, var(--gut-r)) 0 max(36px, var(--gut-l)); display: flex; align-items: center; justify-content: center; gap: 14px; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+.regbar .live { background: var(--on-lime); }
+.regbar strong { font-weight: 600; }
+.regbar__cd { padding: 3px 8px; background: var(--on-lime); color: var(--lime); font-variant-numeric: tabular-nums; }
+.regbar__go { display: inline-flex; align-items: center; gap: 6px; border-bottom: 1px solid currentColor; }
+.regbar__go svg { width: 13px; height: 13px; transition: transform 0.25s var(--ease); }
+.regbar:hover .regbar__go svg { transform: translate(2px, -2px); }
+.regbar:hover { background: var(--lime-hi); }
+.regbar--hot .regbar__cd { animation: blinkSq 1.2s steps(1) infinite; }
+@media (max-width: 1060px) { .regbar__in { padding: 0 calc(max(60px, min(10vw, 100px)) + 28px) 0 16px; justify-content: flex-start; gap: 10px; } }
+@media (max-width: 640px) {
+  .regbar__in { font-size: 0.62rem; letter-spacing: 0.06em; }
+  .regbar strong { display: none; }
+  .regbar__cd::before { content: 'Closes in '; }
+}
+
+/* confirmed people */
+.person__img { position: relative; }
+.person__org { width: 62%; height: auto; }
+.person__kind { position: absolute; left: 10px; top: 10px; padding: 3px 8px; background: var(--lime); color: var(--on-lime); font-family: var(--f-mono); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; }
+.person--on { background: var(--panel-2); }
+.person__name--on { color: var(--ink); font-size: 1rem; }
+.person__meta { color: var(--muted); font-size: 0.9rem; line-height: 1.4; }
+.person__session { margin-top: 4px; font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lime); }
+@media (max-width: 640px) { .regbar__go { font-size: 0; border-bottom: 0; } .regbar__go svg { width: 16px; height: 16px; } }

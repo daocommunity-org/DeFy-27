@@ -68,7 +68,7 @@ export const ROUNDS: Round[] = [
 ]
 
 export const AGENDA = [
-  { day: 'Sat 9 Jan', items: ['Inauguration', 'Speaker sessions', 'Hacking begins', 'Initial judging', 'Overnight hacking'] },
+  { day: 'Sat 9 Jan', items: ['Inauguration', 'Speaker sessions', 'n8n guest session', 'Hacking begins', 'Initial judging', 'Overnight hacking'] },
   { day: 'Sun 10 Jan', items: ['Final judging', 'Hacking ends', 'Pitching finals + winners'], highlight: 'Pitching finals + winners' },
 ]
 
@@ -97,4 +97,18 @@ export const FAQS = [
   { q: 'Are registrations open?', a: 'Yes, they’re open now on Unstop and close on 15 December 2026. Register your team there, then submit your idea and proposed tech stack in Round 1.' },
   { q: 'Is there a code of conduct?', a: 'Yes. DeFy’27 follows the MLH Code of Conduct. Every participant, mentor, judge and sponsor agrees to it when they take part.' },
   { q: 'Who organises DeFy?', a: 'The DAO Community and BIC, VIT Chennai’s entrepreneurship club. DeFy’27 is the 4th edition.' },
+]
+
+/** Confirmed speakers, judges and mentors. Empty slots on the homepage show
+ *  "Revealing soon" until there are four people here. */
+export type Person = { name: string; role: string; kind: 'Guest speaker' | 'Speaker' | 'Judge' | 'Mentor'; org: string; orgLogo?: string; session?: string }
+export const PEOPLE: Person[] = [
+  {
+    name: 'Nikku.Dev',
+    role: 'Tech Advocate | Dev Evangelist at n8n',
+    kind: 'Guest speaker',
+    org: 'n8n',
+    orgLogo: '/logos/current/n8n.svg',
+    session: 'Guest speaker session by n8n',
+  },
 ]

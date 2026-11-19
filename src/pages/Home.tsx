@@ -6,7 +6,7 @@ import { DotMatrix, GlyphField, PixelCluster } from '../components/Pixel'
 import { Accordion, CountUp, Frame, RegisterButton, SectionHead, Stars } from '../components/ui'
 import { LINKS } from '../config/links'
 import { DEFY26 } from '../data/archive'
-import { AGENDA, EVENT, FAQS, PILLARS, ROUNDS, TRACKS } from '../data/event'
+import { AGENDA, EVENT, FAQS, PEOPLE, PILLARS, ROUNDS, TRACKS } from '../data/event'
 import { ALL_BRANDS, COMMUNITY, CURRENT_SPONSORS, ORGANIZERS, type CurrentSponsor } from '../data/sponsors'
 import { AUDIENCE } from '../data/sponsorship'
 import { useNow } from '../lib/hooks'
@@ -202,7 +202,7 @@ function Tracks() {
 const PERKS = [
   { k: 'Entry', v: 'Free', d: 'No fee to register, no fee to compete.' },
   { k: 'Bounties', v: 'Sponsor problem statements', d: 'Partners fund their own challenges, with prizes on top of the main pool.' },
-  { k: 'Mentors', v: 'Industry judges & mentors', d: 'Partners sit on the finalist panel and run workshops and talks.' },
+  { k: 'Mentors', v: 'Industry judges & mentors', d: 'Partners sit on the finalist panel and run workshops and talks, including a guest session from n8n.' },
   { k: 'Careers', v: 'Get hired', d: 'Hiring partners see your work, your GitHub and your LinkedIn.' },
   { k: 'Swag', v: 'T-shirts & stickers', d: 'Event tees and swag for every team at the venue.' },
   { k: 'Network', v: 'Investor-style pitch', d: 'The finalists in every track pitch to people who back startups.' },
@@ -346,13 +346,24 @@ function Schedule() {
 /* ── people (honest placeholders) ─────────────────────────────── */
 
 function People() {
-  const roles = ['Judge', 'Mentor', 'Speaker', 'Judge']
+  const open = ['Judge', 'Mentor', 'Speaker', 'Judge'].slice(PEOPLE.length)
   return (
     <Frame id="people" tone="raised">
-      <SectionHead n="07" eyebrow="Judges, mentors & speakers" title="The room you’ll pitch to" sub="Founders, investors and protocol engineers. The line-up is revealed in drops, so watch our socials." />
+      <SectionHead n="07" eyebrow="Judges, mentors & speakers" title="The room you’ll pitch to" sub="Founders, investors and builders from the companies backing DeFy. More names drop soon, so watch our socials." />
       <div className="people">
-        {roles.map((r, i) => (
-          <div key={i} className="person chamfer" data-reveal style={{ ['--i' as string]: i }}>
+        {PEOPLE.map((p, i) => (
+          <article key={p.name} className="person person--on chamfer" data-reveal style={{ ['--i' as string]: i }}>
+            <div className="person__img">
+              {p.orgLogo ? <img src={p.orgLogo} alt={p.org} className="person__org" /> : <DotMatrix pattern={['.####.', '##..##', '##..##', '.####.', '......', '######', '######']} />}
+              <span className="person__kind">{p.kind}</span>
+            </div>
+            <span className="person__name person__name--on">{p.name}</span>
+            <span className="person__meta">{p.role}</span>
+            {p.session && <span className="person__session">{p.session}</span>}
+          </article>
+        ))}
+        {open.map((r, i) => (
+          <div key={i} className="person chamfer" data-reveal style={{ ['--i' as string]: PEOPLE.length + i }}>
             <div className="person__img">
               <DotMatrix pattern={['.####.', '##..##', '##..##', '.####.', '......', '######', '######']} />
             </div>

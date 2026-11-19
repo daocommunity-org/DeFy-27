@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { LINKS, SOCIALS } from '../config/links'
 import { EVENT } from '../data/event'
 import { POWERED_BY } from '../data/sponsors'
+import { useNow } from '../lib/hooks'
 import { Link, useRouter } from '../lib/router'
 import { Icon, SocialIcon } from './Icon'
 import { DefyWordmark, Mark27 } from './Marks'
@@ -21,6 +22,41 @@ function Brand() {
       <DefyWordmark className="brand__defy" />
       <Mark27 className="brand__27" />
     </Link>
+  )
+}
+
+/** Sticky notice above the nav while registrations are open: a live
+ *  countdown to the close, linking straight to the registration page. */
+function RegBar() {
+  const now = useNow(1000)
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  const open = now < EVENT.registrationCloses
+  useEffect(() => {
+    document.documentElement.style.setProperty('--bar-h', open ? '' : '0px')
+  }, [open])
+  if (!open) return null
+  const s = Math.max(0, Math.floor((EVENT.registrationCloses - now) / 1000))
+  const d = Math.floor(s / 86400)
+  const h = Math.floor(s / 3600) % 24
+  const m = Math.floor(s / 60) % 60
+  const sec = s % 60
+  const p2 = (n: number) => String(n).padStart(2, '0')
+  const left = mounted ? `${d}d ${p2(h)}h ${p2(m)}m ${p2(sec)}s` : '--'
+  const href = LINKS.register ?? '/#register'
+  return (
+    <a className={`regbar${d < 7 ? ' regbar--hot' : ''}`} href={href} {...(LINKS.register ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+      <span className="regbar__in">
+        <span className="live" aria-hidden="true" />
+        <strong>Registrations close {EVENT.registrationClosesShort}</strong>
+        <span className="regbar__cd" role="timer" aria-label={`${d} days ${h} hours left to register`}>
+          {left} left
+        </span>
+        <span className="regbar__go">
+          Register now <Icon name="arrow" />
+        </span>
+      </span>
+    </a>
   )
 }
 
@@ -45,6 +81,7 @@ export function Nav() {
 
   return (
     <>
+    <RegBar />
     <a id="mlh-trust-badge" className="mlh-badge" href={LINKS.mlhBadge} target="_blank" rel="noopener noreferrer">
       <img src="/logos/mlh-trust-badge-2027-white.svg" alt="Major League Hacking 2027 Hackathon Season" />
     </a>
