@@ -1195,3 +1195,33 @@ html.lenis, html.lenis body { height: auto; }
 .hero__foot, .hero__foot + .hero__strip { background: #0b0d0a; }
 /* ticker rows are positioned by JS (idle drift + scroll push) */
 .wsc__row--a, .wsc__row--b { transform: none; }
+
+/* ═══ PHONE HERO: exactly one screen ═════════════════════════════
+   Three zones in 100svh: badge at the top, the lockup + statement +
+   Register centred in the free space, facts + logos on the bottom edge.
+   Sizes scale with the screen height so short phones still fit. */
+@media (max-width: 760px) {
+  .hero.hero--center { min-height: 100svh; height: 100svh; max-height: none; display: flex; flex-direction: column; }
+  .hero--center .hero__art { -webkit-mask-image: radial-gradient(85% 42% at 50% 40%, transparent 0%, transparent 55%, rgba(0, 0, 0, 0.55) 80%, #000 100%); mask-image: radial-gradient(85% 42% at 50% 40%, transparent 0%, transparent 55%, rgba(0, 0, 0, 0.55) 80%, #000 100%); opacity: 0.75; }
+
+  .hero--center .hero__in { flex: 1 1 auto; min-height: 0; justify-content: center; gap: 0; padding-top: calc(var(--nav-h) + clamp(10px, 2.4svh, 22px)); padding-bottom: clamp(12px, 2.6svh, 24px); }
+  .hero--center .hbadge { margin-bottom: auto; }
+  .hero--center { --defy-h: min(64px, 14.6vw); }
+  .hero--center .hero__mark { margin-top: 0; }
+  .hero__row { width: 100%; margin-top: clamp(16px, 3svh, 28px); margin-bottom: auto; padding-top: 0; border-top: 0; gap: clamp(16px, 2.8svh, 24px); }
+  .hero__row .hero__title { font-size: clamp(0.94rem, 4vw, 1.06rem); line-height: 1.5; max-width: 30ch; }
+  .hero__row .hero__cta { gap: 12px; }
+  .hero__row .hero__cta .btn { --h: clamp(50px, 7svh, 58px); }
+
+  /* bottom edge: compact facts + logos */
+  .hero__foot .hfacts { padding: 0 var(--gut-r) 0 var(--gut-l); }
+  .hero__foot .hfact, .hero__foot .hfact:first-child, .hero__foot .hfact:last-child { padding: clamp(8px, 1.5svh, 13px) 0 clamp(8px, 1.5svh, 13px) 12px; gap: 4px; }
+  .hero__foot .hfact:nth-child(odd) { padding-left: 0; }
+  .hero__foot .hfact dd { font-size: 0.76rem; }
+  .hero__strip-in { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding-block: clamp(10px, 1.8svh, 16px); }
+  .hero__strip-k { width: 100%; }
+  .hero__strip ul { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; width: 100%; gap: 10px; }
+  .hlogo--w3 .hlogo__img { height: 14px; }
+  .hlogo--w2 .hlogo__img, .hlogo__img--mlh { height: 15px !important; }
+}
+@media (max-width: 760px) { .hlogo--w3 .hlogo__img { height: 13px; } .hero__strip ul { gap: 8px; } }
