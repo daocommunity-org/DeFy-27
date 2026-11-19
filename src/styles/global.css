@@ -1167,3 +1167,77 @@ a.copyrow__val:hover { color: var(--lime); }
 .ticker__i i { font-style: normal; font-size: 0.78rem; letter-spacing: 0; color: var(--lime); opacity: 0.8; }
 .ticker__i--hl { color: var(--lime); }
 @media (max-width: 760px) { .ticker__track { padding-block: 12px; } .ticker__i { font-size: 0.62rem; gap: 18px; padding-right: 18px; } }
+
+/* ═══ TICKER STYLES (redesign branch, ?ticker=1..5) ═══════════════ */
+
+.hswitch { position: fixed; z-index: 70; right: 16px; bottom: 16px; display: flex; align-items: center; gap: 4px; padding: 6px; background: rgba(13, 15, 11, 0.94); box-shadow: inset 0 0 0 1px var(--line-2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.hswitch__k { padding: 0 8px; color: var(--dim); }
+.hswitch button { padding: 7px 10px; border: 0; background: transparent; color: var(--muted); cursor: pointer; font: inherit; letter-spacing: inherit; text-transform: inherit; }
+.hswitch button span { color: var(--dim); margin-left: 4px; }
+.hswitch button:hover { color: var(--ink); }
+.hswitch button.is-on { background: var(--lime); color: var(--on-lime); }
+.hswitch button.is-on span { color: rgba(8, 9, 7, 0.6); }
+@media (max-width: 760px) { .hswitch { right: auto; left: 10px; bottom: calc(88px + env(safe-area-inset-bottom, 0px)); } .hswitch button span { display: none; } }
+
+.wire { position: relative; overflow: hidden; }
+.wl { display: flex; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.wl__track { display: flex; flex: none; width: max-content; animation: loop var(--dur, 80s) linear infinite; }
+.wl--rev .wl__track { animation-direction: reverse; }
+.wl:hover .wl__track { animation-play-state: paused; }
+.wl__i { display: inline-flex; align-items: center; white-space: nowrap; }
+.wl__i i { font-style: normal; color: var(--lime); }
+
+/* 1 · Wire: quiet mono strip, with room around it */
+.wire--1 { padding-block: clamp(26px, 3.6vw, 44px); }
+.wl--wire { padding-block: 16px; border-block: 1px solid var(--line); }
+.wl--wire .wl__i { gap: 14px; padding-right: 40px; font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+.wl--wire .wl__i i { font-size: 0.8rem; }
+.wl--wire .wl__i.is-hl { color: var(--lime); }
+
+/* 2 · Outline: big outlined type, one phrase filled */
+.wire--2 { padding-block: clamp(30px, 4vw, 56px); }
+.wl--outline { --dur: 140s; }
+.wl--outline .wl__i { gap: clamp(20px, 2.4vw, 36px); padding-right: clamp(20px, 2.4vw, 36px); font-family: var(--f-display); font-weight: 300; font-size: clamp(2rem, 5.2vw, 4.4rem); line-height: 1.1; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(236, 240, 228, 0.28); }
+.wl--outline .wl__i i { -webkit-text-stroke: 0; font-size: 0.42em; }
+.wl--outline .wl__i.is-hl { color: var(--lime); -webkit-text-stroke: 0; }
+
+/* 3 · Rails: two thin rails, opposite directions */
+.wire--3 { padding-block: clamp(26px, 3.6vw, 44px); }
+.wl--rail { padding-block: 12px; }
+.wl--rail .wl__i { gap: 12px; padding-right: 36px; font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.wl--rail .wl__i.is-hl { color: var(--lime); }
+.wl--rail-b { --dur: 110s; border-top: 1px solid var(--line); }
+.wl--rail-b .wl__i { color: var(--dim); }
+
+/* 4 · Rotator: one statement at a time */
+.wire--4 { padding-block: clamp(30px, 4.4vw, 60px); }
+.wrot { position: relative; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px 28px; max-width: 1280px; margin-inline: auto; padding-inline: max(36px, var(--gut-l)); }
+.wrot__n { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.14em; color: var(--lime); }
+.wrot__n span { color: var(--dim); }
+.wrot__view { overflow: hidden; height: clamp(2.2rem, 4.6vw, 3.8rem); }
+.wrot__t { display: inline-flex; align-items: center; gap: 18px; font-family: var(--f-display); font-weight: 300; font-size: clamp(1.4rem, 3.6vw, 3rem); line-height: 1.25; text-transform: uppercase; white-space: nowrap; animation: rotIn 0.6s var(--ease) both; }
+.wrot__t i { font-style: normal; color: var(--lime); font-size: 0.6em; }
+.wrot__t.is-hl { color: var(--lime); }
+@keyframes rotIn { from { transform: translateY(100%); opacity: 0; } }
+.wrot__bar { grid-column: 1 / -1; height: 1px; background: var(--line); }
+.wrot__bar span { display: block; height: 100%; width: 100%; background: var(--lime); transform-origin: 0 50%; animation: rotBar 2.6s linear both; }
+@keyframes rotBar { from { transform: scaleX(0); } }
+
+/* 5 · Scroll-linked rows */
+.wire--5 { padding-block: clamp(30px, 4vw, 56px); }
+.wsc__row { display: flex; width: max-content; gap: 0; white-space: nowrap; transition: transform 0.15s linear; }
+.wsc__row--a { transform: translateX(calc(-20% + var(--sx, 0%))); }
+.wsc__row--b { transform: translateX(calc(-30% - var(--sx, 0%))); margin-top: 6px; }
+.wsc__i { display: inline-flex; align-items: center; gap: clamp(18px, 2.2vw, 32px); padding-right: clamp(18px, 2.2vw, 32px); font-family: var(--f-display); font-weight: 300; font-size: clamp(1.8rem, 4.8vw, 4rem); line-height: 1.12; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(236, 240, 228, 0.26); }
+.wsc__row--b .wsc__i { -webkit-text-stroke-color: rgba(236, 240, 228, 0.14); }
+.wsc__i i { font-style: normal; font-size: 0.4em; color: var(--lime); -webkit-text-stroke: 0; }
+.wsc__i.is-hl { color: var(--lime); -webkit-text-stroke: 0; }
+
+@media (max-width: 760px) {
+  .wrot { grid-template-columns: 1fr; padding-inline: var(--gut-l) var(--gut-r); }
+  .wrot__t { font-size: 1.2rem; white-space: normal; }
+  .wrot__view { height: 3.2rem; }
+}
+@media (prefers-reduced-motion: reduce) { .wsc__row { transform: none !important; } }
+.wrot__t { font-size: clamp(1.1rem, 2.5vw, 2.15rem); }
+.wrot__view { height: clamp(1.9rem, 3.4vw, 2.9rem); }
