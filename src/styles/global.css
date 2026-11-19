@@ -1235,3 +1235,20 @@ html.lenis, html.lenis body { height: auto; }
   .hero--center .hbadge__v::before { content: '·'; margin-right: 8px; color: var(--dim); }
   .hero__row .hero__cta .btn { --h: clamp(46px, 6.2svh, 52px); --bc: 8px; font-size: 0.68rem; }
 }
+
+/* ═══ PHONE DOCK: compact countdown that never runs under the button ═══ */
+@media (max-width: 760px) {
+  .dock { gap: 10px; padding: 7px 7px 7px 14px; }
+  .dock__cd { gap: 4px; }
+  .dock__k { font-size: 0.5rem; letter-spacing: 0.16em; }
+  .dock__v { display: flex; align-items: baseline; gap: 7px; font-size: 0.8rem; }
+  .dock__u { display: inline-flex; align-items: baseline; gap: 1px; }
+  .dock__u b { font-weight: 400; color: var(--ink); }
+  .dock__u i { font-style: normal; font-family: var(--f-mono); font-size: 0.56rem; letter-spacing: 0.04em; color: var(--lime); }
+  .dock .btn { flex: none; --h: 42px; --bc: 7px; padding: 0 14px; gap: 10px; font-size: 0.58rem; }
+}
+@media (max-width: 760px) {
+  .hero__foot .hfact dd { font-size: 0.72rem; letter-spacing: 0.02em; }
+  .hero__strip .hlogo__img--mlh { height: 17px !important; }
+  .hero__strip ul { align-items: center; }
+}

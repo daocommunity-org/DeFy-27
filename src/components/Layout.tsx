@@ -81,7 +81,17 @@ function RegDock() {
       <span className="dock__cd" role="timer">
         <span className="dock__k">Registrations close in</span>
         <span className="dock__v">
-          {Math.floor(s / 86400)}d {p2(Math.floor(s / 3600) % 24)}h {p2(Math.floor(s / 60) % 60)}m {p2(s % 60)}s
+          {([
+            [String(Math.floor(s / 86400)), 'd'],
+            [p2(Math.floor(s / 3600) % 24), 'h'],
+            [p2(Math.floor(s / 60) % 60), 'm'],
+            [p2(s % 60), 's'],
+          ] as const).map(([n, u]) => (
+            <span className="dock__u" key={u}>
+              <b>{n}</b>
+              <i>{u}</i>
+            </span>
+          ))}
         </span>
       </span>
       <RegisterButton label="Register" />
