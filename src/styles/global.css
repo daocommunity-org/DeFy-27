@@ -1225,3 +1225,13 @@ html.lenis, html.lenis body { height: auto; }
   .hlogo--w2 .hlogo__img, .hlogo__img--mlh { height: 15px !important; }
 }
 @media (max-width: 760px) { .hlogo--w3 .hlogo__img { height: 13px; } .hero__strip ul { gap: 8px; } }
+
+/* ═══ PHONE HERO: slim status line + calmer CTA ═══════════════════ */
+@media (max-width: 760px) {
+  .hero--center .hbadge { --bc: 0px; align-items: center; gap: 8px; padding: 0; background: none; box-shadow: none; clip-path: none; margin-top: 30px; font-size: 0.56rem; letter-spacing: 0.16em; }
+  .hero--center .hbadge__dot { width: 7px; height: 7px; }
+  .hero--center .hbadge__k { padding: 0; color: var(--muted); }
+  .hero--center .hbadge__v { padding: 0; background: none; color: var(--lime); font-weight: 500; }
+  .hero--center .hbadge__v::before { content: '·'; margin-right: 8px; color: var(--dim); }
+  .hero__row .hero__cta .btn { --h: clamp(46px, 6.2svh, 52px); --bc: 8px; font-size: 0.68rem; }
+}
