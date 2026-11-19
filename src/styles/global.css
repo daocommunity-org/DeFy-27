@@ -1141,3 +1141,21 @@ a.copyrow__val:hover { color: var(--lime); }
   .hero__row .hero__cta { width: 100%; flex-wrap: wrap; }
 }
 @media (max-width: 760px) { .hero--center { --defy-h: min(48px, 12.4vw); } .hero--center .hero__mark { width: var(--defy-w); } .hero--center .hero__27 { height: calc(var(--defy-h) * 0.42); } }
+
+/* ─── hero: centre the whole Defy27 lockup ───────────────────────
+   The lockup (Defy + 27) is one unit, centred as a whole. Its width is
+   derived from the wordmark height so the text row below can match it
+   exactly: Defy 4.444h + gap 0.06h + 27 (0.37h tall → 1.278h wide). */
+.hero--center { --lock-w: calc(var(--defy-h) * 5.782); }
+.hero--center .hero__mark { display: flex; align-items: flex-start; justify-content: space-between; width: var(--lock-w); max-width: 100%; margin-inline: auto; }
+.hero--center .hero__defy { width: calc(var(--defy-h) * 4.444); height: auto; flex: none; }
+.hero--center .hero__27 { position: static; height: calc(var(--defy-h) * 0.37); width: auto; flex: none; margin-top: calc(var(--defy-h) * 0.02); }
+.hero__row { width: var(--lock-w); }
+@media (max-width: 760px) {
+  .hero--center .hero__mark { width: var(--lock-w); }
+  .hero--center .hero__27 { height: calc(var(--defy-h) * 0.37); }
+  .hero__row { width: 100%; }
+}
+.hero--center { --defy-h: clamp(76px, 10.8vw, 168px); }
+@media (max-width: 760px) { .hero--center { --defy-h: min(48px, 12.4vw); } }
+@media (min-width: 901px) { .hero__row .hero__link { display: none; } .hero__row .hero__title { max-width: 34ch; text-wrap: balance; } }
