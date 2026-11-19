@@ -21,7 +21,11 @@ const RouterCtx = createContext<Ctx>({ route: '/', go: () => {} })
 
 function scrollToId(id: string) {
   const el = document.getElementById(id)
-  if (el) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+  if (!el) return
+  // Glide via the smooth scroller when it's running. Lenis already honours
+  // the CSS scroll-padding-top (nav height + 12px), so no extra offset.
+  if (window.__lenis) window.__lenis.scrollTo(el, { duration: 1.2 })
+  else el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
 }
 
 export function RouterProvider({ children }: { children: ReactNode }) {
@@ -49,7 +53,10 @@ export function RouterProvider({ children }: { children: ReactNode }) {
     }
     setRoute(KNOWN.includes(target) ? target : '404')
     if (id) requestAnimationFrame(() => requestAnimationFrame(() => scrollToId(id)))
-    else if (changing) window.scrollTo(0, 0)
+    else if (changing) {
+      if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true })
+      else window.scrollTo(0, 0)
+    }
   }, [])
 
   return <RouterCtx.Provider value={{ route, go }}>{children}</RouterCtx.Provider>

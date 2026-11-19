@@ -103,6 +103,8 @@ export function Nav() {
   useEffect(() => setOpen(false), [route])
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
+    if (open) window.__lenis?.stop()
+    else window.__lenis?.start()
     const esc = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
     window.addEventListener('keydown', esc)
     return () => window.removeEventListener('keydown', esc)

@@ -1,3 +1,4 @@
+import Lenis from 'lenis'
 import { useEffect } from 'react'
 import { useReducedMotion } from './hooks'
 import { useRouter } from './router'
@@ -10,9 +11,34 @@ import { useRouter } from './router'
 //                       horizontal track inside it
 //  html --scroll-p      page progress, for the progress bar
 
+declare global {
+  interface Window {
+    __lenis?: Lenis
+  }
+}
+
 export function SiteMotion() {
   const { route } = useRouter()
   const reduce = useReducedMotion()
+
+  // Smooth, inertial wheel scrolling for the whole site (Lenis). Touch keeps
+  // native scrolling; reduced-motion users get plain scrolling.
+  useEffect(() => {
+    if (reduce) return
+    const lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.95 })
+    window.__lenis = lenis
+    let id = 0
+    const loop = (t: number) => {
+      lenis.raf(t)
+      id = requestAnimationFrame(loop)
+    }
+    id = requestAnimationFrame(loop)
+    return () => {
+      cancelAnimationFrame(id)
+      lenis.destroy()
+      delete window.__lenis
+    }
+  }, [reduce])
 
   useEffect(() => {
     const root = document.documentElement
