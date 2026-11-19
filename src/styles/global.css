@@ -1159,3 +1159,11 @@ a.copyrow__val:hover { color: var(--lime); }
 .hero--center { --defy-h: clamp(76px, 10.8vw, 168px); }
 @media (max-width: 760px) { .hero--center { --defy-h: min(48px, 12.4vw); } }
 @media (min-width: 901px) { .hero__row .hero__link { display: none; } .hero__row .hero__title { max-width: 34ch; text-wrap: balance; } }
+
+/* ─── ticker: a quiet news wire instead of a lime billboard ────── */
+.ticker { position: relative; background: var(--bg-2); color: var(--muted); border-block: 1px solid var(--line); -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.ticker__track { padding-block: 15px; animation-duration: 80s; }
+.ticker__i { gap: 26px; padding-right: 26px; font-family: var(--f-mono); font-weight: 400; font-size: 0.68rem; letter-spacing: 0.22em; color: var(--muted); }
+.ticker__i i { font-style: normal; font-size: 0.78rem; letter-spacing: 0; color: var(--lime); opacity: 0.8; }
+.ticker__i--hl { color: var(--lime); }
+@media (max-width: 760px) { .ticker__track { padding-block: 12px; } .ticker__i { font-size: 0.62rem; gap: 18px; padding-right: 18px; } }

@@ -90,6 +90,9 @@ function Hero() {
   )
 }
 
+/** Separators borrowed from the hero mosaic. */
+const TICKER_GLYPHS = ['◎', '✕', '□', '+']
+
 function Ticker() {
   const items = [`Registrations close ${EVENT.registrationClosesShort}`, 'Entry free', 'Teams of 4–6', '24 hours', 'Web3 × Business', 'VIT Chennai', '9–10 Jan 2027', `Top ${EVENT.shortlisted} to VIT Chennai`, `${EVENT.finalistsPerTrack} finalists per track`]
   const row = [...items, ...items]
@@ -97,9 +100,9 @@ function Ticker() {
     <div className="ticker" aria-hidden="true">
       <div className="ticker__track">
         {[...row, ...row].map((t, i) => (
-          <span key={i} className="ticker__i">
+          <span key={i} className={`ticker__i${i % items.length === 0 ? ' ticker__i--hl' : ''}`}>
             {t}
-            <i>✦</i>
+            <i>{TICKER_GLYPHS[i % TICKER_GLYPHS.length]}</i>
           </span>
         ))}
       </div>
