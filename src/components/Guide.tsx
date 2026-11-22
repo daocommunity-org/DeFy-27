@@ -38,22 +38,28 @@ export function Guide() {
           <RegisterButton />
         </div>
 
-        <div className="qsheet" id="questions">
+        <div className="qsheet chamfer" id="questions">
           <div className="qsheet__head">
-            <h3 className="guide__h">Your Round 1 submission</h3>
+            <span className="qsheet__k">Round 1 · submission</span>
+            <h3 className="guide__h">What your answers must cover</h3>
             <p>Cover all five. Draft them with your team before you fill in the form.</p>
           </div>
           <ol className="qsheet__list">
-            {QUESTIONS.map(({ q, help }) => (
-              <li key={q}>
+            {QUESTIONS.map(({ q, help }, i) => (
+              <li key={q} data-n={`Q${String(i + 1).padStart(2, '0')}`}>
                 <p className="qsheet__q">{q}</p>
                 <p className="qsheet__help">{help}</p>
               </li>
             ))}
           </ol>
-          <p className="qsheet__judged">
-            <span>Judged on</span> {CRITERIA.join(', ')}.
-          </p>
+          <div className="qsheet__judged">
+            <span className="qsheet__k">Judged on</span>
+            <ul>
+              {CRITERIA.map((c) => (
+                <li key={c}>{c}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
