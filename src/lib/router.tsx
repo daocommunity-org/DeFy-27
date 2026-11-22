@@ -37,9 +37,39 @@ export function RouterProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener(HASH_MODE ? 'hashchange' : 'popstate', on)
   }, [])
 
-  // Land on a deep link like /sponsor#tiers.
+  // Land on a deep link like /#guide: jump straight there, then re-align when
+  // fonts and the page finish loading (both change the height of what's above),
+  // unless the visitor has started moving around by then.
   useEffect(() => {
-    if (!HASH_MODE && location.hash) requestAnimationFrame(() => scrollToId(location.hash.slice(1)))
+    if (HASH_MODE || !location.hash) return
+    const id = location.hash.slice(1)
+    let live = true
+    const jump = () => {
+      const el = live ? document.getElementById(id) : null
+      if (!el) return
+      const lenis = window.__lenis
+      if (lenis) {
+        lenis.resize()
+        lenis.scrollTo(el, { immediate: true, force: true })
+      } else el.scrollIntoView({ behavior: 'instant' })
+    }
+    const stop = () => (live = false)
+    const input = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const
+    input.forEach((e) => window.addEventListener(e, stop, { passive: true }))
+    const first = window.setTimeout(jump, 0)
+    document.fonts?.ready.then(jump)
+    window.addEventListener('load', jump)
+    const last = window.setTimeout(() => {
+      jump()
+      stop()
+    }, 1500)
+    return () => {
+      stop()
+      window.clearTimeout(first)
+      window.clearTimeout(last)
+      window.removeEventListener('load', jump)
+      input.forEach((e) => window.removeEventListener(e, stop))
+    }
   }, [])
 
   const go = useCallback((to: string) => {

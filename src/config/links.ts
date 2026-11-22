@@ -10,7 +10,7 @@ export const LINKS = {
   /** Shown on Register buttons: "Register on Unstop". */
   registerPlatform: 'Unstop',
   /** WhatsApp community. null → button hidden. */
-  whatsappCommunity: null as string | null,
+  whatsappCommunity: 'https://chat.whatsapp.com/HM7x66noOUj1Ab8qtXXOqP' as string | null,
   /** Shortlisted teams after Round 1. null → button hidden. */
   shortlistedTeams: null as string | null,
   /** MLH trust badge target (India is in MLH's APAC region) + their Code of Conduct. */

@@ -9,8 +9,9 @@ import { DefyWordmark, Mark27 } from './Marks'
 import { RegisterButton } from './ui'
 
 const NAV = [
-  { to: '/#chain', label: 'How it works' },
+  { to: '/#guide', label: 'How it works' },
   { to: '/#tracks', label: 'Tracks' },
+  { to: '/#faq', label: 'FAQ' },
   { to: '/#sponsors', label: 'Sponsors' },
   { to: '/archive', label: 'Past editions' },
   { to: '/sponsor', label: 'Sponsor us' },
@@ -181,7 +182,8 @@ export function Footer() {
             <div>
               <p className="foot__h">Explore</p>
               <Link to="/#about">About</Link>
-              <Link to="/#chain">How it works</Link>
+              <Link to="/#guide">How it works</Link>
+              <Link to="/#rules">Rules</Link>
               <Link to="/#tracks">Tracks</Link>
               <Link to="/#faq">FAQ</Link>
             </div>

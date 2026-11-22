@@ -2,6 +2,7 @@ import { Countdown } from '../components/Countdown'
 import { Icon } from '../components/Icon'
 import { DefyWordmark, Mark27 } from '../components/Marks'
 import { Gallery } from '../components/Gallery'
+import { Guide } from '../components/Guide'
 import { Wire } from '../components/Wire'
 import { DotMatrix, GlyphField, PixelCluster } from '../components/Pixel'
 import { Accordion, CountUp, Frame, RegisterButton, SectionHead, Stars } from '../components/ui'
@@ -163,7 +164,7 @@ const TRACK_DOTS = [
 function Tracks() {
   return (
     <Frame id="tracks" tone="raised">
-      <SectionHead n="02" eyebrow="Tracks" title="Pick your battleground" sub="Full briefs drop to registered teams first, along with sponsor problem statements and their bounties." />
+      <SectionHead n="03" eyebrow="Tracks" title="Pick your battleground" sub="Full briefs drop to registered teams first, along with sponsor problem statements and their bounties." />
       <div className="tracks rail-m">
         {TRACKS.map((t, i) => (
           <article key={t.id} className="track chamfer" data-reveal style={{ ['--i' as string]: i }}>
@@ -200,7 +201,7 @@ const PERKS = [
 function Prizes() {
   return (
     <Frame id="prizes">
-      <SectionHead n="03" eyebrow="Prizes & perks" title="What’s on the table" />
+      <SectionHead n="04" eyebrow="Prizes & perks" title="What’s on the table" />
       <div className="prizes">
         <div className="pool chamfer" data-reveal>
           <span className="pool__k">Prize pool</span>
@@ -245,7 +246,7 @@ function HowItWorks() {
     <section className="how" id="how" data-hscroll>
       <div className="how__sticky">
         <div className="wrap how__head">
-          <SectionHead n="04" eyebrow="How it works" title="Four blocks to the Grand Prize" />
+          <SectionHead n="05" eyebrow="Timeline" title="Four blocks to the Grand Prize" />
           <div className="how__bar" aria-hidden="true">
             <span />
           </div>
@@ -279,15 +280,15 @@ function HowItWorks() {
 function Selection() {
   const steps = [
     { k: 'Step 1', t: 'Register', d: `Every team registers on Unstop by ${EVENT.registrationClosesLabel}. Entry is free.`, who: 'All teams' },
-    { k: 'Step 2', t: 'Round 1 · online', d: 'Every registered team submits an idea and a proposed tech stack, from anywhere.', who: 'All teams' },
-    { k: 'Step 3', t: 'Shortlist', d: `Judges shortlist the top ${EVENT.shortlisted} teams. Only these teams are invited to VIT Chennai.`, who: `${EVENT.shortlisted} teams` },
-    { k: 'Step 4', t: '24-hour hackathon', d: `The ${EVENT.shortlisted} shortlisted teams build their prototype and pitch deck on campus, overnight.`, who: `${EVENT.shortlisted} teams` },
+    { k: 'Step 2', t: 'Round 1 · online', d: 'Every registered team answers the Round 1 questions on Unstop, from anywhere.', who: 'All teams' },
+    { k: 'Step 3', t: 'Shortlist', d: `Judges shortlist the top ${EVENT.shortlisted} teams. Only these teams are invited to VIT Chennai, and each must RSVP.`, who: `${EVENT.shortlisted} teams` },
+    { k: 'Step 4', t: 'Round 2 · on campus', d: `The ${EVENT.shortlisted} shortlisted teams build their prototype and pitch deck on campus, overnight.`, who: `${EVENT.shortlisted} teams` },
     { k: 'Step 5', t: 'Finalists', d: `From the shortlisted teams only, judges pick ${EVENT.finalistsPerTrack} finalists in each track.`, who: `${EVENT.finalistsPerTrack} per track` },
     { k: 'Step 6', t: 'Pitching finals', d: 'The finalists pitch their prototype and business model for the Grand Prize.', who: 'Finalists' },
   ]
   return (
     <Frame id="selection">
-      <SectionHead n="05" eyebrow="Selection" title="Exactly how teams reach the finals" sub="No guesswork. Every finalist comes from the shortlisted teams who build at VIT Chennai." />
+      <SectionHead n="06" eyebrow="Selection" title="Exactly how teams reach the finals" sub="No guesswork. Every finalist comes from the shortlisted teams who build at VIT Chennai." />
       <ol className="funnel">
         {steps.map((s, i) => (
           <li key={s.k} className={`funnel__row${i === 4 ? ' is-key' : ''}`} style={{ ['--w' as string]: `${100 - i * 9}%`, ['--i' as string]: i }} data-reveal>
@@ -310,7 +311,7 @@ function Selection() {
 function Schedule() {
   return (
     <Frame id="schedule">
-      <SectionHead n="06" eyebrow="Schedule" title="Two days, one night" sub={`${EVENT.dates} · ${EVENT.venue}. Exact timings go out to shortlisted teams.`} />
+      <SectionHead n="07" eyebrow="Schedule" title="Two days, one night" sub={`${EVENT.dates} · ${EVENT.venue}. Exact timings go out to shortlisted teams.`} />
       <div className="sched">
         {AGENDA.map((d, di) => (
           <div key={d.day} className="sched__day chamfer" data-reveal style={{ ['--i' as string]: di }}>
@@ -339,7 +340,7 @@ function People() {
   const open = ['Judge', 'Mentor', 'Speaker', 'Judge'].slice(PEOPLE.length)
   return (
     <Frame id="people" tone="raised">
-      <SectionHead n="07" eyebrow="Judges, mentors & speakers" title="The room you’ll pitch to" sub="Founders, investors and builders from the companies backing DeFy. More names drop soon, so watch our socials." />
+      <SectionHead n="08" eyebrow="Judges, mentors & speakers" title="The room you’ll pitch to" sub="Founders, investors and builders from the companies backing DeFy. More names drop soon, so watch our socials." />
       <div className="people rail-m">
         {PEOPLE.map((p, i) => (
           <article key={p.name} className="person person--on chamfer" data-reveal style={{ ['--i' as string]: i }}>
@@ -388,7 +389,7 @@ function Sponsors() {
   const rest = CURRENT_SPONSORS.filter((s) => s.tier === 'platform' || s.tier === 'community')
   return (
     <Frame id="sponsors">
-      <SectionHead n="08" eyebrow="Sponsors & partners" title="Powering DeFy’27" />
+      <SectionHead n="09" eyebrow="Sponsors & partners" title="Powering DeFy’27" />
       <div className="partners" data-reveal>
         <div className="partners__main">
           {main.map((s) => (
@@ -437,7 +438,7 @@ function Sponsors() {
 function LastEdition() {
   return (
     <Frame id="numbers" tone="raised">
-      <SectionHead n="09" eyebrow="DeFy’26 · last edition" title="The proof of work" />
+      <SectionHead n="10" eyebrow="DeFy’26 · last edition" title="The proof of work" />
       <div className="proof">
         <div className="proof__big" data-reveal>
           <span className="proof__v">
@@ -506,7 +507,7 @@ function Faq() {
     <Frame id="faq">
       <div className="faq">
         <div>
-          <SectionHead n="10" eyebrow="FAQ" title="Before you register" />
+          <SectionHead n="11" eyebrow="FAQ" title="Got a question?" />
           <div className="orgs" data-reveal>
             <p className="orgs__k">Organised by</p>
             <div className="orgs__logos">
@@ -556,6 +557,7 @@ export default function Home() {
       <Wire />
       <Photos />
       <About />
+      <Guide />
       <Tracks />
       <Prizes />
       <HowItWorks />

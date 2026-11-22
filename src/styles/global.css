@@ -1252,3 +1252,47 @@ html.lenis, html.lenis body { height: auto; }
   .hero__strip .hlogo__img--mlh { height: 17px !important; }
   .hero__strip ul { align-items: center; }
 }
+
+/* ═══ GUIDE: what to do, the Round 1 questions, the rules ═════════ */
+.guide__h { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: 0.92rem; line-height: 1.4; text-transform: uppercase; }
+.guide__top { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(36px, 6vw, 96px); align-items: start; }
+.guide__steps { margin: 16px 0 40px; padding: 0 0 0 1.8em; }
+.guide__steps li { padding: 9px 0 9px 8px; max-width: 40ch; }
+.guide__steps li::marker { color: var(--muted); font-family: var(--f-mono); }
+.guide__steps a { color: inherit; text-underline-offset: 4px; }
+.guide__steps strong { font-weight: 600; }
+.guide__next { margin: 12px 0 28px; max-width: 42ch; color: var(--muted); }
+.qsheet { background: var(--ink); color: var(--bg); clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%); padding: clamp(24px, 3.4vw, 44px); }
+.qsheet__head p { margin: 8px 0 0; color: #4d5148; }
+.qsheet__list { margin: 22px 0 0; padding: 0 0 0 1.8em; }
+.qsheet__list li { padding: 14px 0 14px 6px; border-top: 1px solid rgba(8, 9, 7, 0.16); }
+.qsheet__list li::marker { font-family: var(--f-mono); font-weight: 600; }
+.qsheet__q { margin: 0; font-size: 1.12rem; font-weight: 600; line-height: 1.35; }
+.qsheet__help { margin: 4px 0 0; color: #4d5148; font-size: 0.94rem; line-height: 1.45; }
+.qsheet__judged { margin: 8px 0 0; padding-top: 16px; border-top: 1px solid var(--bg); font-size: 0.94rem; line-height: 1.5; }
+.qsheet__judged span { font-weight: 600; }
+.rules { margin-top: clamp(48px, 7vw, 96px); display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 16px clamp(36px, 6vw, 96px); }
+.rules dl { margin: 0; }
+.rules__row { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 4px 20px; padding: 14px 0; border-bottom: 1px solid var(--line-2); }
+.rules__row:first-child { padding-top: 0; }
+.rules__row dt { font-weight: 600; }
+.rules__row dd { margin: 0; color: var(--muted); text-wrap: pretty; }
+.guide__ask { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; }
+.guide__ask p { margin: 0; font-weight: 600; }
+@media (max-width: 860px) { .guide__top, .rules { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  .guide__steps { margin-bottom: 28px; }
+  .guide__steps li { padding-block: 6px; }
+  .guide__do .btn { width: 100%; }
+  .qsheet { margin-inline: calc(var(--gut-l) * -1) calc(var(--gut-r) * -1); padding: 24px var(--gut-r) 24px var(--gut-l); }
+  .qsheet__q { font-size: 1.02rem; }
+  .rules__row { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Six nav links: stay on one line on small laptops */
+.nav__a { white-space: nowrap; }
+@media (max-width: 1365px) {
+  .nav__a { padding-inline: 9px; font-size: 0.64rem; letter-spacing: 0.06em; }
+  .nav__a::before { position: absolute; left: 1px; }
+  .nav__a::after { position: absolute; right: 1px; }
+}
