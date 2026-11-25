@@ -775,12 +775,6 @@ a.copyrow__val:hover { color: var(--lime); }
   .limehero__arrow path { stroke-dashoffset: 0 !important; }
 }
 
-/* MLH trust badge: MLH's spec — fixed, top right, 10% wide, 60–100px */
-.mlh-badge { position: fixed; top: 0; right: 50px; z-index: 75; display: block; width: 10%; min-width: 60px; max-width: 100px; }
-.mlh-badge img { display: block; width: 100%; height: auto; }
-@media (min-width: 1061px) { .nav__in { padding-right: max(170px, var(--gut-r)); } }
-@media (max-width: 1060px) { .mlh-badge { right: 16px; } .nav__in { padding-right: calc(max(60px, min(10vw, 100px)) + 32px); } }
-
 /* sponsor page: the one open title seat */
 .titleseat { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 22px; margin-bottom: 18px; padding: 20px 24px; border: 1px dashed var(--lime-50); text-decoration: none; transition: background 0.3s, border-color 0.3s; }
 .titleseat:hover { background: var(--lime-10); border-style: solid; border-color: var(--lime); }

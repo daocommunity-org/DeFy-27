@@ -124,9 +124,6 @@ export function Nav() {
   return (
     <>
     <RegBar />
-    <a id="mlh-trust-badge" className="mlh-badge" href={LINKS.mlhBadge} target="_blank" rel="noopener noreferrer">
-      <img src="/logos/mlh-trust-badge-2027-white.svg" alt="Major League Hacking 2027 Hackathon Season" />
-    </a>
     <header className={`nav ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
       <div className="nav__in">
         <Brand />

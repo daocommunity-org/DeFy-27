@@ -13,8 +13,7 @@ export const LINKS = {
   whatsappCommunity: 'https://chat.whatsapp.com/HM7x66noOUj1Ab8qtXXOqP' as string | null,
   /** Shortlisted teams after Round 1. null → button hidden. */
   shortlistedTeams: null as string | null,
-  /** MLH trust badge target (India is in MLH's APAC region) + their Code of Conduct. */
-  mlhBadge: 'https://mlh.io/apac?utm_source=apac-hackathon&utm_medium=TrustBadge&utm_campaign=2027-season&utm_content=white',
+  /** MLH Code of Conduct. */
   mlhCodeOfConduct: 'https://mlh.io/code-of-conduct',
   /** Sponsorship deck PDF served from /public. Set to null to stop offering it. */
   sponsorDeck: '/DeFy27-Sponsorship-Deck.pdf' as string | null,
