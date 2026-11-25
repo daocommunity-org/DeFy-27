@@ -192,7 +192,7 @@ function Tracks() {
 const PERKS = [
   { k: 'Entry', v: 'Free', d: 'No fee to register, no fee to compete.' },
   { k: 'Bounties', v: 'Sponsor problem statements', d: 'Partners fund their own challenges, with prizes on top of the main pool.' },
-  { k: 'Mentors', v: 'Industry judges & mentors', d: 'Partners sit on the finalist panel and run workshops and talks, including a guest session from n8n.' },
+  { k: 'Mentors', v: 'Industry judges & mentors', d: 'Partners sit on the finalist panel and run workshops and talks.' },
   { k: 'Careers', v: 'Get hired', d: 'Hiring partners see your work, your GitHub and your LinkedIn.' },
   { k: 'Swag', v: 'T-shirts & stickers', d: 'Event tees and swag for every team at the venue.' },
   { k: 'Network', v: 'Investor-style pitch', d: 'The finalists in every track pitch to people who back startups.' },

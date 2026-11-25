@@ -54,7 +54,6 @@ export const ORGANIZERS = {
 export type CurrentSponsor = Brand & { tier: 'title' | 'sponsor' | 'platform' | 'community'; role: string; weight: 1 | 2 | 3 }
 export const CURRENT_SPONSORS: CurrentSponsor[] = [
   { name: 'ElevenLabs', logo: L('current/elevenlabs.svg'), href: 'https://elevenlabs.io', tier: 'sponsor', role: 'Sponsor', weight: 3, mono: true },
-  { name: 'n8n', logo: L('current/n8n.svg'), href: 'https://n8n.io', tier: 'sponsor', role: 'Sponsor', weight: 3, mono: true },
   { name: 'CodeCrafters', logo: L('current/codecrafters.svg'), href: 'https://codecrafters.io', tier: 'sponsor', role: 'Sponsor', weight: 3, mono: true },
   { name: 'MLH', logo: L('current/mlh.svg'), href: 'https://mlh.io', tier: 'community', role: 'Community partner', weight: 2, mono: true },
 ]

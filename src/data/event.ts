@@ -72,7 +72,7 @@ export const ROUNDS: Round[] = [
 ]
 
 export const AGENDA = [
-  { day: 'Sat 9 Jan', items: ['Inauguration', 'Speaker sessions', 'n8n guest session', 'Hacking begins', 'Initial judging', 'Overnight hacking'] },
+  { day: 'Sat 9 Jan', items: ['Inauguration', 'Speaker sessions', 'Hacking begins', 'Initial judging', 'Overnight hacking'] },
   { day: 'Sun 10 Jan', items: ['Final judging', 'Hacking ends', 'Pitching finals + winners'], highlight: 'Pitching finals + winners' },
 ]
 
@@ -137,13 +137,4 @@ export const FAQS = [
 /** Confirmed speakers, judges and mentors. Empty slots on the homepage show
  *  "Revealing soon" until there are four people here. */
 export type Person = { name: string; role: string; kind: 'Guest speaker' | 'Speaker' | 'Judge' | 'Mentor'; org: string; orgLogo?: string; session?: string }
-export const PEOPLE: Person[] = [
-  {
-    name: 'Nikku.Dev',
-    role: 'Tech Advocate | Dev Evangelist at n8n',
-    kind: 'Guest speaker',
-    org: 'n8n',
-    orgLogo: '/logos/current/n8n.svg',
-    session: 'Guest speaker session by n8n',
-  },
-]
+export const PEOPLE: Person[] = []
