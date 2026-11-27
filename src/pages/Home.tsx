@@ -81,7 +81,7 @@ function Hero() {
             {CURRENT_SPONSORS.map((b) => (
               <li key={b.name} className={`hlogo hlogo--w${b.weight}`}>
                 <a href={b.href} target="_blank" rel="noopener noreferrer" title={b.name}>
-                  <img src={b.logo} alt={b.name} className={`hlogo__img hlogo__img--${b.name.toLowerCase()}`} />
+                  <img src={b.logo} alt={b.name} className={`hlogo__img hlogo__img--${b.name.toLowerCase().replace(/\W+/g, '')}`} />
                 </a>
               </li>
             ))}
@@ -384,9 +384,30 @@ function Partner({ s, size }: { s: CurrentSponsor; size: 'lg' | 'md' }) {
   )
 }
 
+/* the newsletter partner: signups through their link are what the deal pays on */
+function Newsletter() {
+  return (
+    <div className="news chamfer" data-reveal>
+      <img className="news__logo" src="/logos/current/heapheaphurray.png" alt="Heap Heap Hurray" loading="lazy" />
+      <div className="news__copy">
+        <p className="news__k">Official Newsletter Partner</p>
+        <h3 className="news__t">Heap Heap Hurray</h3>
+        <p className="news__d">The tech newsletter written for India, not San Francisco: one free email every weekday morning, read on 100+ Indian campuses.</p>
+      </div>
+      <div className="news__cta">
+        <a className="btn btn--lime" href={LINKS.newsletter} target="_blank" rel="noopener noreferrer">
+          <span>Subscribe free</span>
+          <Icon name="arrow" className="btn__ico" />
+        </a>
+        <p className="news__note">Then click the confirmation link in your inbox, or nothing arrives.</p>
+      </div>
+    </div>
+  )
+}
+
 function Sponsors() {
   const main = CURRENT_SPONSORS.filter((s) => s.tier === 'title' || s.tier === 'sponsor')
-  const rest = CURRENT_SPONSORS.filter((s) => s.tier === 'platform' || s.tier === 'community')
+  const rest = CURRENT_SPONSORS.filter((s) => s.tier === 'platform' || s.tier === 'community' || s.tier === 'media')
   return (
     <Frame id="sponsors">
       <SectionHead n="09" eyebrow="Sponsors & partners" title="Powering DeFy’27" />
@@ -402,6 +423,8 @@ function Sponsors() {
           ))}
         </div>
       </div>
+
+      <Newsletter />
 
       <div className="pitch chamfer" data-reveal>
         <div className="pitch__copy">

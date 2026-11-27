@@ -11,6 +11,8 @@ export const LINKS = {
   registerPlatform: 'Unstop',
   /** WhatsApp community. null → button hidden. */
   whatsappCommunity: 'https://chat.whatsapp.com/HM7x66noOUj1Ab8qtXXOqP' as string | null,
+  /** Heap Heap Hurray signup (their tracking link for our site and socials; signups are counted through it). */
+  newsletter: 'https://dub.sh/i7rsRPz',
   /** Shortlisted teams after Round 1. null → button hidden. */
   shortlistedTeams: null as string | null,
   /** MLH Code of Conduct. */

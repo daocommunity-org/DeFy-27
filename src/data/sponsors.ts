@@ -51,10 +51,11 @@ export const ORGANIZERS = {
  *  Order = display order (hero strip and sponsors section). Unstop is the
  *  registration platform, not a sponsor, so it isn't listed here. */
 /** `weight` sets how big the logo is drawn (3 = biggest): match it to the deal size. */
-export type CurrentSponsor = Brand & { tier: 'title' | 'sponsor' | 'platform' | 'community'; role: string; weight: 1 | 2 | 3 }
+export type CurrentSponsor = Brand & { tier: 'title' | 'sponsor' | 'platform' | 'community' | 'media'; role: string; weight: 1 | 2 | 3 }
 export const CURRENT_SPONSORS: CurrentSponsor[] = [
   { name: 'ElevenLabs', logo: L('current/elevenlabs.svg'), href: 'https://elevenlabs.io', tier: 'sponsor', role: 'Sponsor', weight: 3, mono: true },
   { name: 'CodeCrafters', logo: L('current/codecrafters.svg'), href: 'https://codecrafters.io', tier: 'sponsor', role: 'Sponsor', weight: 3, mono: true },
+  { name: 'Heap Heap Hurray', logo: L('current/heapheaphurray.png'), href: 'https://dub.sh/i7rsRPz', tier: 'media', role: 'Official Newsletter Partner', weight: 2 },
   { name: 'MLH', logo: L('current/mlh.svg'), href: 'https://mlh.io', tier: 'community', role: 'Community partner', weight: 2, mono: true },
 ]
 

@@ -1294,3 +1294,13 @@ html.lenis, html.lenis body { height: auto; }
   .nav__a::before { position: absolute; left: 1px; }
   .nav__a::after { position: absolute; right: 1px; }
 }
+
+/* newsletter partner (Heap Heap Hurray) */
+.news { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 20px 32px; margin-top: 18px; padding: clamp(22px, 3vw, 32px); background: var(--panel); border-left: 3px solid #ffd33d; }
+.news__logo { width: clamp(110px, 12vw, 150px); height: auto; display: block; }
+.news__k { margin: 0; font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: #ffd33d; }
+.news__t { margin: 6px 0 0; font-family: var(--f-display); font-weight: 400; font-size: clamp(1.05rem, 1.8vw, 1.35rem); text-transform: uppercase; line-height: 1.2; }
+.news__d { margin: 8px 0 0; max-width: 54ch; color: var(--muted); font-size: 0.98rem; }
+.news__cta { display: grid; justify-items: start; gap: 10px; }
+.news__note { margin: 0; max-width: 28ch; font-size: 0.8rem; color: var(--dim); }
+@media (max-width: 860px) { .news { grid-template-columns: minmax(0, 1fr); } .news__cta .btn { width: 100%; } .news__note { max-width: none; } }

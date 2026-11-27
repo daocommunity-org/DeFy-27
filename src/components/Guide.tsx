@@ -29,6 +29,13 @@ export function Guide() {
             <li>
               Answer the questions on Unstop and submit by <strong>{EVENT.submissionsCloseLabel}</strong>.
             </li>
+            <li>
+              Subscribe free to{' '}
+              <a href={LINKS.newsletter} target="_blank" rel="noopener noreferrer">
+                Heap Heap Hurray
+              </a>
+              , our official newsletter partner: Indian tech in under five minutes, every weekday morning. Then click the confirmation link in your inbox.
+            </li>
           </ol>
 
           <h3 className="guide__h">Round 2, in person</h3>
