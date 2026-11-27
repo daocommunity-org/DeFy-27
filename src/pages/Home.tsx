@@ -58,6 +58,16 @@ function Hero() {
             </Link>
           </div>
         </div>
+        <a className="hnews" href={LINKS.newsletter} target="_blank" rel="noopener noreferrer">
+          <img className="hnews__mark" src="/logos/current/heapheaphurray-mark.png" alt="" width="40" height="40" />
+          <span className="hnews__txt">
+            <span className="hnews__k">Newsletter partner · Heap Heap Hurray</span>
+            <span className="hnews__hook">Your algorithm knows what keeps you scrolling. This finds the tech actually worth knowing.</span>
+          </span>
+          <span className="hnews__go">
+            Subscribe free <Icon name="arrow" />
+          </span>
+        </a>
       </div>
 
       <div className="hero__foot">
